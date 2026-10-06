@@ -10,6 +10,7 @@ import { Footer } from './components/Footer';
 import { DailyChallengeModal } from './components/DailyChallengeModal';
 import { BadgeModal } from './components/BadgeModal';
 import { CertificateModal } from './components/CertificateModal';
+import { SearchModal } from './components/SearchModal';
 import { ToastContainer } from './components/ToastContainer';
 import { HomeView } from './views/HomeView';
 import { LearnView } from './views/LearnView';
@@ -39,6 +40,7 @@ const MainAppContent: React.FC = () => {
       <Footer />
 
       {/* Global Modals & Overlays */}
+      <SearchModal />
       <DailyChallengeModal />
       <BadgeModal />
       <CertificateModal />

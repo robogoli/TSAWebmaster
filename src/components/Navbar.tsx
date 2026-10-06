@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sparkles, Volume2, VolumeX, ShieldAlert, Award } from 'lucide-react';
+import { Sparkles, Volume2, VolumeX, ShieldAlert, Award, Search } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { ViewMode } from '../types/game';
 import { sound } from '../utils/sound';
@@ -12,6 +12,7 @@ export const Navbar: React.FC = () => {
     currentLevel,
     toggleSound,
     openDailyModal,
+    openSearch,
   } = useGame();
 
   const navItems: { id: ViewMode; label: string }[] = [
@@ -72,7 +73,21 @@ export const Navbar: React.FC = () => {
         </nav>
 
         {/* Zone 3: 1-2 primary actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          {/* Universal Search Button */}
+          <button
+            onClick={openSearch}
+            className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 hover:border-cyan-500/60 text-slate-400 hover:text-slate-200 transition-colors"
+            title="Search curriculum & topics (⌘K)"
+            aria-label="Search curriculum"
+          >
+            <Search className="w-4 h-4 text-cyan-400 shrink-0" />
+            <span className="hidden xl:inline text-xs text-slate-400 font-normal">Search...</span>
+            <kbd className="hidden sm:inline-flex items-center rounded px-1.5 py-0.5 text-[10px] font-mono text-slate-500 bg-slate-800 border border-slate-700">
+              ⌘K
+            </kbd>
+          </button>
+
           {/* Daily Challenge Trigger */}
           <button
             onClick={openDailyModal}

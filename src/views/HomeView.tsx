@@ -32,6 +32,7 @@ export const HomeView: React.FC = () => {
     openDailyModal,
     openCertificate,
     navigateToChallenges,
+    openSearch,
   } = useGame();
 
   // Determine next recommended mission
@@ -313,6 +314,14 @@ export const HomeView: React.FC = () => {
             </button>
 
             <button
+              onClick={openSearch}
+              className="px-6 py-4 rounded-xl font-bold text-slate-200 bg-slate-900/80 border border-slate-700/80 hover:border-cyan-400 hover:text-cyan-300 transition-all flex items-center gap-2 text-sm tracking-wider uppercase cursor-pointer"
+            >
+              <Search className="w-4 h-4 text-cyan-400" />
+              <span>🔍 SEARCH</span>
+            </button>
+
+            <button
               onClick={() => {
                 sound.playClick();
                 setCurrentView('skilltree');
@@ -423,7 +432,7 @@ export const HomeView: React.FC = () => {
       {/* ACADEMY QUICK JUMP PORTALS (EASILY NAVIGABLE TO ALL PAGES) */}
       {/* ========================================================================= */}
       <div className="space-y-4">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-xl sm:text-2xl font-black text-white uppercase tracking-tight">
               ACADEMY NAVIGATION HUB
@@ -432,9 +441,16 @@ export const HomeView: React.FC = () => {
               One-click direct access to all academy missions, skill tree, daily challenges, and dashboard.
             </p>
           </div>
-          <span className="text-xs font-mono text-cyan-400 hidden sm:inline">
-            Direct Jump Links
-          </span>
+          <button
+            onClick={openSearch}
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 border border-slate-700/80 hover:border-cyan-400 text-slate-300 hover:text-white transition-all text-xs font-mono shrink-0 shadow-sm cursor-pointer"
+          >
+            <Search className="w-3.5 h-3.5 text-cyan-400" />
+            <span>Search Curriculum...</span>
+            <kbd className="rounded px-1.5 py-0.5 text-[10px] font-mono text-slate-400 bg-slate-800 border border-slate-700">
+              ⌘K
+            </kbd>
+          </button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">

@@ -38,6 +38,10 @@ interface GameContextType {
   isCertificateOpen: boolean;
   openCertificate: () => void;
   closeCertificate: () => void;
+  isSearchOpen: boolean;
+  openSearch: () => void;
+  closeSearch: () => void;
+  toggleSearch: () => void;
   triggerConfetti: () => void;
 }
 
@@ -76,11 +80,24 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [activeBadgeCelebration, setActiveBadgeCelebration] = useState<Badge | null>(null);
   const [isDailyModalOpen, setIsDailyModalOpen] = useState<boolean>(false);
   const [isCertificateOpen, setIsCertificateOpen] = useState<boolean>(false);
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
 
   // Sync sound manager
   useEffect(() => {
     sound.enabled = state.soundEnabled;
   }, [state.soundEnabled]);
+
+  // Global shortcut Cmd+K / Ctrl+K
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        setIsSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   // Persist state
   useEffect(() => {
@@ -291,6 +308,16 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           setIsCertificateOpen(true);
         },
         closeCertificate: () => setIsCertificateOpen(false),
+        isSearchOpen,
+        openSearch: () => {
+          sound.playClick();
+          setIsSearchOpen(true);
+        },
+        closeSearch: () => setIsSearchOpen(false),
+        toggleSearch: () => {
+          sound.playClick();
+          setIsSearchOpen((prev) => !prev);
+        },
         triggerConfetti,
       }}
     >
