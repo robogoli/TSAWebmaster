@@ -29,7 +29,7 @@ export const CertificateModal: React.FC = () => {
         <div className="flex items-center justify-between border-b border-slate-800 px-6 py-4 bg-[#091124]">
           <div className="flex items-center gap-2 text-sm font-semibold text-cyan-300">
             <Award className="w-4 h-4 text-amber-400" />
-            <span>AI QUEST ACADEMY · OFFICIAL DIPLOMA</span>
+            <span>AI QUEST ACADEMY</span>
           </div>
           <div className="flex items-center gap-2">
             <button

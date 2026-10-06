@@ -42,6 +42,10 @@ interface GameContextType {
   openSearch: () => void;
   closeSearch: () => void;
   toggleSearch: () => void;
+  isOnboardingOpen: boolean;
+  openOnboarding: () => void;
+  closeOnboarding: () => void;
+  completeOnboarding: (name: string, avatar: string) => void;
   triggerConfetti: () => void;
 }
 
@@ -81,6 +85,7 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [isDailyModalOpen, setIsDailyModalOpen] = useState<boolean>(false);
   const [isCertificateOpen, setIsCertificateOpen] = useState<boolean>(false);
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false);
+  const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(() => !state.hasSeenIntro);
 
   // Sync sound manager
   useEffect(() => {
@@ -273,6 +278,21 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setCurrentView('challenges');
   };
 
+  const completeOnboarding = (name: string, avatar: string) => {
+    const finalName = name.trim() || 'Cadet Nova';
+    const finalAvatar = avatar || '🚀';
+    sound.playSuccess();
+    triggerConfetti();
+    setState((prev) => ({
+      ...prev,
+      studentName: finalName,
+      studentAvatar: finalAvatar,
+      hasSeenIntro: true,
+    }));
+    setIsOnboardingOpen(false);
+    showToast(`Welcome aboard, ${finalName}! Your academy record is initialized.`, 'info');
+  };
+
   return (
     <GameContext.Provider
       value={{
@@ -318,6 +338,13 @@ export const GameProvider: React.FC<{ children: React.ReactNode }> = ({ children
           sound.playClick();
           setIsSearchOpen((prev) => !prev);
         },
+        isOnboardingOpen,
+        openOnboarding: () => {
+          sound.playClick();
+          setIsOnboardingOpen(true);
+        },
+        closeOnboarding: () => setIsOnboardingOpen(false),
+        completeOnboarding,
         triggerConfetti,
       }}
     >

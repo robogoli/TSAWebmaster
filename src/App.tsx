@@ -11,6 +11,7 @@ import { DailyChallengeModal } from './components/DailyChallengeModal';
 import { BadgeModal } from './components/BadgeModal';
 import { CertificateModal } from './components/CertificateModal';
 import { SearchModal } from './components/SearchModal';
+import { OnboardingModal } from './components/OnboardingModal';
 import { ToastContainer } from './components/ToastContainer';
 import { HomeView } from './views/HomeView';
 import { LearnView } from './views/LearnView';
@@ -40,6 +41,7 @@ const MainAppContent: React.FC = () => {
       <Footer />
 
       {/* Global Modals & Overlays */}
+      <OnboardingModal />
       <SearchModal />
       <DailyChallengeModal />
       <BadgeModal />

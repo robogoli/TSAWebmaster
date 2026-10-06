@@ -33,6 +33,7 @@ export const HomeView: React.FC = () => {
     openCertificate,
     navigateToChallenges,
     openSearch,
+    openOnboarding,
   } = useGame();
 
   // Determine next recommended mission
@@ -289,13 +290,20 @@ export const HomeView: React.FC = () => {
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase mb-4">
             <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-            AI QUEST ACADEMY · CADET INITIALIZATION
+            AI QUEST ACADEMY
           </div>
 
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight uppercase font-sans">
-            WELCOME, FUTURE <br />
-            <span className="bg-gradient-to-r from-cyan-400 via-teal-300 to-amber-300 bg-clip-text text-transparent">
-              AI MASTER.
+            WELCOME, <br />
+            <span
+              onClick={openOnboarding}
+              className="bg-gradient-to-r from-cyan-400 via-teal-300 to-amber-300 bg-clip-text text-transparent hover:opacity-90 transition-opacity cursor-pointer inline-flex items-center gap-2"
+              title="Click to edit profile name"
+            >
+              <span>{state.studentName || 'CADET'}.</span>
+              <span className="text-xs font-mono font-normal tracking-wider lowercase text-slate-500 hover:text-cyan-400">
+                ✎
+              </span>
             </span>
           </h1>
 

@@ -161,7 +161,7 @@ export const SkillTreeView: React.FC = () => {
         <div className="relative z-10 space-y-4">
           <div className="inline-flex items-center gap-2 text-xs font-mono font-bold tracking-widest text-cyan-400 uppercase">
             <GitBranch className="w-4 h-4 text-cyan-400" />
-            <span>AI QUEST ACADEMY · NEURAL SYNAPSE TOPOLOGY</span>
+            <span>AI QUEST ACADEMY</span>
           </div>
 
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">

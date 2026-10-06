@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { User, Shield, Sparkles, Award, RotateCcw, Check, Save } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { sound } from '../utils/sound';
@@ -8,6 +8,11 @@ export const ProfileView: React.FC = () => {
   const [name, setName] = useState(state.studentName);
   const [avatar, setAvatar] = useState(state.studentAvatar);
   const [showResetConfirm, setShowResetConfirm] = useState(false);
+
+  useEffect(() => {
+    setName(state.studentName);
+    setAvatar(state.studentAvatar);
+  }, [state.studentName, state.studentAvatar]);
 
   const avatarOptions = ['🚀', '🧠', '🤖', '⚡', '🛸', '🛰️', '👾', '🌟'];
 
@@ -37,7 +42,7 @@ export const ProfileView: React.FC = () => {
             <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-cyan-400 via-teal-300 to-amber-300" />
 
             <div className="text-[10px] font-mono text-cyan-400 uppercase tracking-widest">
-              AI QUEST ACADEMY ID
+              AI QUEST ACADEMY
             </div>
 
             <div className="mx-auto h-24 w-24 rounded-2xl bg-cyan-500/10 border-2 border-cyan-400/60 flex items-center justify-center text-5xl shadow-[0_0_20px_rgba(6,182,212,0.3)]">
