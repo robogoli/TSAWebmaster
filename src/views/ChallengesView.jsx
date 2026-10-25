@@ -1,113 +1,93 @@
-import { useState } from 'react';
+import { useState } from "react";
 import {
   Wand2,
   Scale,
   ArrowRight,
   CheckCircle2,
   Send,
-  RefreshCw,
-} from 'lucide-react';
-import { useGame } from '../context/GameContext';
-import { ETHICS_SCENARIOS, PROMPT_CHALLENGE_STAGES } from '../data/gameData';
-import { sound } from '../utils/sound';
-
+  RefreshCw
+} from "lucide-react";
+import { useGame } from "../context/GameContext";
+import { ETHICS_SCENARIOS, PROMPT_CHALLENGE_STAGES } from "../data/gameData";
+import { sound } from "../utils/sound";
 export function ChallengesView() {
   const { state, completeMission, setCurrentView, challengesTab, setChallengesTab } = useGame();
   const activeTab = challengesTab;
   const setActiveTab = setChallengesTab;
-
-  // Mission 2: Prompt Engineering State
   const [activeStageIndex] = useState(0);
-  const [revealedPillars, setRevealedPillars] = useState<Record<string, boolean>>({});
-  const [customPromptText, setCustomPromptText] = useState('');
-  const [customGeneratedOutput, setCustomGeneratedOutput] = useState<string | null>(null);
-  const [customScore, setCustomScore] = useState<{ task: boolean; details: boolean; audience: boolean; format: boolean } | null>(null);
+  const [revealedPillars, setRevealedPillars] = useState({});
+  const [customPromptText, setCustomPromptText] = useState("");
+  const [customGeneratedOutput, setCustomGeneratedOutput] = useState(null);
+  const [customScore, setCustomScore] = useState(null);
   const [isGenerating, setIsGenerating] = useState(false);
-
-  // Mission 3: Ethics State
   const [scenarioIndex, setScenarioIndex] = useState(0);
-  const [selectedEthicsChoices, setSelectedEthicsChoices] = useState<Record<string, 'A' | 'B' | 'C'>>({});
-
+  const [selectedEthicsChoices, setSelectedEthicsChoices] = useState({});
   const stage = PROMPT_CHALLENGE_STAGES[activeStageIndex % PROMPT_CHALLENGE_STAGES.length];
   const currentScenario = ETHICS_SCENARIOS[scenarioIndex % ETHICS_SCENARIOS.length];
-
-  const isMission2Done = state.completedMissions.includes('mission_2');
-  const isMission3Done = state.completedMissions.includes('mission_3');
-
-  // Pillar toggle
-  const togglePillar = (key: string) => {
+  const isMission2Done = state.completedMissions.includes("mission_2");
+  const isMission3Done = state.completedMissions.includes("mission_3");
+  const togglePillar = (key) => {
     sound.playClick();
     setRevealedPillars((prev) => ({ ...prev, [key]: !prev[key] }));
   };
-
   const handleCompletePromptStage = () => {
     sound.playSuccess();
-    completeMission('mission_2', 100, 'prompt-master');
+    completeMission("mission_2", 100, "prompt-master");
   };
-
-  // Custom prompt evaluator
   const handleEvaluateCustomPrompt = () => {
     if (!customPromptText.trim()) return;
     sound.playClick();
     setIsGenerating(true);
-
     setTimeout(() => {
       const lower = customPromptText.toLowerCase();
-
-      // Heuristic pillar check
       const hasTask = /write|explain|summarize|create|compare|analyze|list|design|draft|solve|act as/i.test(lower);
       const hasDetails = lower.length > 40 || /words|steps|specifically|because|focusing|include|example|tone/i.test(lower);
       const hasAudience = /for|audience|students|beginner|expert|children|kids|class|doctor|teacher|cadet/i.test(lower);
       const hasFormat = /table|bullet|bullets|paragraphs|json|markdown|outline|poem|step by step|timeline/i.test(lower);
-
       const score = { task: hasTask, details: hasDetails, audience: hasAudience, format: hasFormat };
       setCustomScore(score);
-
-      // Generate context-aware educational simulated response
-      let output = '';
+      let output = "";
       if (hasTask && hasDetails) {
-        output = `🤖 AI Model Response to "${customPromptText.slice(0, 35)}...":\n\n` +
-          `• Key Takeaway: Precision parameters accepted. Since you specified structured details${hasAudience ? ' tailored for your target audience' : ''}, the output is focused, accurate, and free of fluff.\n` +
-          `• Synthesized Insight: By defining clear constraints, you reduced AI hallucination probability by over 80%!\n\n` +
-          `${hasFormat ? '[Structured formatting applied according to your instructions]' : '[Standard prose applied]'}`;
-      } else {
-        output = `🤖 Generic Vague AI Response:\n\n` +
-          `Space and topics are very large! Without specific details or audience requirements, I can only give you a generic, rambling encyclopedia summary. Try injecting more Task & Audience constraints!`;
-      }
+        output = `\u{1F916} AI Model Response to "${customPromptText.slice(0, 35)}...":
 
+\u2022 Key Takeaway: Precision parameters accepted. Since you specified structured details${hasAudience ? " tailored for your target audience" : ""}, the output is focused, accurate, and free of fluff.
+\u2022 Synthesized Insight: By defining clear constraints, you reduced AI hallucination probability by over 80%!
+
+${hasFormat ? "[Structured formatting applied according to your instructions]" : "[Standard prose applied]"}`;
+      } else {
+        output = `\u{1F916} Generic Vague AI Response:
+
+Space and topics are very large! Without specific details or audience requirements, I can only give you a generic, rambling encyclopedia summary. Try injecting more Task & Audience constraints!`;
+      }
       setCustomGeneratedOutput(output);
       setIsGenerating(false);
-
       if (hasTask && hasDetails && (hasAudience || hasFormat)) {
         sound.playSuccess();
-        completeMission('mission_2', 100, 'prompt-master');
+        completeMission("mission_2", 100, "prompt-master");
       } else {
         sound.playClick();
       }
     }, 600);
   };
-
-  // Ethics selection
-  const handleEthicsSelect = (choice: 'A' | 'B' | 'C') => {
+  const handleEthicsSelect = (choice) => {
     sound.playClick();
     setSelectedEthicsChoices((prev) => ({ ...prev, [currentScenario.id]: choice }));
-
     const option = currentScenario.options.find((o) => o.id === choice);
     if (option?.isBestChoice) {
       sound.playSuccess();
       const updatedChoices = { ...selectedEthicsChoices, [currentScenario.id]: choice };
-      const allScenariosDone = ETHICS_SCENARIOS.every((s) => updatedChoices[s.id] !== undefined);
+      const allScenariosDone = ETHICS_SCENARIOS.every((s) => updatedChoices[s.id] !== void 0);
       if (allScenariosDone) {
-        completeMission('mission_3', 100, 'ethics-expert');
+        completeMission("mission_3", 100, "ethics-expert");
       }
     } else {
       sound.playError();
     }
   };
-
-  return (
-    <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
-      {/* Top Mission Switcher */}
+  return <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+      {
+    /* Top Mission Switcher */
+  }
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
         <div>
           <div className="text-xs font-mono font-bold tracking-widest text-teal-400 uppercase mb-1">
@@ -118,37 +98,31 @@ export function ChallengesView() {
           </h1>
         </div>
 
-        {/* Tab switch */}
+        {
+    /* Tab switch */
+  }
         <nav aria-label="Mission Tab Selection" className="flex items-center gap-2 p-1 rounded-xl bg-slate-900 border border-slate-800">
           <button
-            type="button"
-            onClick={() => {
-              sound.playClick();
-              setActiveTab('prompt');
-            }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'prompt'
-                ? 'bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
+    type="button"
+    onClick={() => {
+      sound.playClick();
+      setActiveTab("prompt");
+    }}
+    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "prompt" ? "bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+  >
             <Wand2 className="w-3.5 h-3.5" />
             <span>MISSION 2: FIX THE PROMPT</span>
             {isMission2Done && <span className="text-emerald-400">✓</span>}
           </button>
 
           <button
-            type="button"
-            onClick={() => {
-              sound.playClick();
-              setActiveTab('ethics');
-            }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
-              activeTab === 'ethics'
-                ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
-                : 'text-slate-400 hover:text-slate-200'
-            }`}
-          >
+    type="button"
+    onClick={() => {
+      sound.playClick();
+      setActiveTab("ethics");
+    }}
+    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "ethics" ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+  >
             <Scale className="w-3.5 h-3.5" />
             <span>MISSION 3: AI ETHICS</span>
             {isMission3Done && <span className="text-emerald-400">✓</span>}
@@ -156,12 +130,19 @@ export function ChallengesView() {
         </nav>
       </header>
 
-      {/* ========================================================================= */}
-      {/* TAB 1: MISSION 2 - AI SKILLS (FIX THE PROMPT) */}
-      {/* ========================================================================= */}
-      {activeTab === 'prompt' && (
-        <section aria-label="Mission 2: Fix the Prompt" className="space-y-8 animate-fadeIn">
-          {/* Mission Intro Banner */}
+      {
+    /* ========================================================================= */
+  }
+      {
+    /* TAB 1: MISSION 2 - AI SKILLS (FIX THE PROMPT) */
+  }
+      {
+    /* ========================================================================= */
+  }
+      {activeTab === "prompt" && <section aria-label="Mission 2: Fix the Prompt" className="space-y-8 animate-fadeIn">
+          {
+    /* Mission Intro Banner */
+  }
           <article className="rounded-2xl border border-teal-500/30 bg-[#081224] p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
@@ -184,7 +165,9 @@ export function ChallengesView() {
             </div>
           </article>
 
-          {/* Before & After Interactive Comparison */}
+          {
+    /* Before & After Interactive Comparison */
+  }
           <section aria-label="Deconstructing Weak Prompts" className="rounded-2xl border border-slate-800 bg-[#091124] p-6 sm:p-8 space-y-6">
             <header className="flex items-center justify-between border-b border-slate-800 pb-4">
               <h3 className="text-lg font-bold text-white">
@@ -195,7 +178,9 @@ export function ChallengesView() {
               </span>
             </header>
 
-            {/* Weak Prompt Banner */}
+            {
+    /* Weak Prompt Banner */
+  }
             <article className="p-4 rounded-xl border border-rose-500/40 bg-rose-950/20">
               <span className="text-[11px] font-mono font-bold text-rose-300 uppercase tracking-wider block mb-1">
                 ORIGINAL WEAK PROMPT (LEVEL 1)
@@ -208,94 +193,90 @@ export function ChallengesView() {
               </p>
             </article>
 
-            {/* The 4 Pillars Grid */}
+            {
+    /* The 4 Pillars Grid */
+  }
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {/* Pillar 1: Task */}
+              {
+    /* Pillar 1: Task */
+  }
               <article
-                onClick={() => togglePillar('task')}
-                className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                  revealedPillars.task
-                    ? 'border-teal-500 bg-teal-950/30'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                }`}
-              >
+    onClick={() => togglePillar("task")}
+    className={`p-4 rounded-xl border cursor-pointer transition-all ${revealedPillars.task ? "border-teal-500 bg-teal-950/30" : "border-slate-800 bg-slate-900/60 hover:border-slate-700"}`}
+  >
                 <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-teal-300 uppercase">
                     1. TASK
                   </span>
-                  <span className="text-xs text-slate-400">{revealedPillars.task ? '✓' : '+'}</span>
+                  <span className="text-xs text-slate-400">{revealedPillars.task ? "\u2713" : "+"}</span>
                 </header>
                 <h4 className="text-xs font-semibold text-white mb-1">What you want done</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {revealedPillars.task ? stage.pillars.task : 'Click to inspect required action & role...'}
+                  {revealedPillars.task ? stage.pillars.task : "Click to inspect required action & role..."}
                 </p>
               </article>
 
-              {/* Pillar 2: Details */}
+              {
+    /* Pillar 2: Details */
+  }
               <article
-                onClick={() => togglePillar('details')}
-                className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                  revealedPillars.details
-                    ? 'border-cyan-500 bg-cyan-950/30'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                }`}
-              >
+    onClick={() => togglePillar("details")}
+    className={`p-4 rounded-xl border cursor-pointer transition-all ${revealedPillars.details ? "border-cyan-500 bg-cyan-950/30" : "border-slate-800 bg-slate-900/60 hover:border-slate-700"}`}
+  >
                 <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-cyan-300 uppercase">
                     2. DETAILS
                   </span>
-                  <span className="text-xs text-slate-400">{revealedPillars.details ? '✓' : '+'}</span>
+                  <span className="text-xs text-slate-400">{revealedPillars.details ? "\u2713" : "+"}</span>
                 </header>
                 <h4 className="text-xs font-semibold text-white mb-1">Topic, scope & limits</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {revealedPillars.details ? stage.pillars.details : 'Click to inspect constraints & key elements...'}
+                  {revealedPillars.details ? stage.pillars.details : "Click to inspect constraints & key elements..."}
                 </p>
               </article>
 
-              {/* Pillar 3: Audience */}
+              {
+    /* Pillar 3: Audience */
+  }
               <article
-                onClick={() => togglePillar('audience')}
-                className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                  revealedPillars.audience
-                    ? 'border-indigo-500 bg-indigo-950/30'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                }`}
-              >
+    onClick={() => togglePillar("audience")}
+    className={`p-4 rounded-xl border cursor-pointer transition-all ${revealedPillars.audience ? "border-indigo-500 bg-indigo-950/30" : "border-slate-800 bg-slate-900/60 hover:border-slate-700"}`}
+  >
                 <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-indigo-300 uppercase">
                     3. AUDIENCE
                   </span>
-                  <span className="text-xs text-slate-400">{revealedPillars.audience ? '✓' : '+'}</span>
+                  <span className="text-xs text-slate-400">{revealedPillars.audience ? "\u2713" : "+"}</span>
                 </header>
                 <h4 className="text-xs font-semibold text-white mb-1">Who is it for?</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {revealedPillars.audience ? stage.pillars.audience : 'Click to inspect reading level & tone...'}
+                  {revealedPillars.audience ? stage.pillars.audience : "Click to inspect reading level & tone..."}
                 </p>
               </article>
 
-              {/* Pillar 4: Format */}
+              {
+    /* Pillar 4: Format */
+  }
               <article
-                onClick={() => togglePillar('format')}
-                className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                  revealedPillars.format
-                    ? 'border-amber-500 bg-amber-950/30'
-                    : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
-                }`}
-              >
+    onClick={() => togglePillar("format")}
+    className={`p-4 rounded-xl border cursor-pointer transition-all ${revealedPillars.format ? "border-amber-500 bg-amber-950/30" : "border-slate-800 bg-slate-900/60 hover:border-slate-700"}`}
+  >
                 <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-amber-300 uppercase">
                     4. FORMAT
                   </span>
-                  <span className="text-xs text-slate-400">{revealedPillars.format ? '✓' : '+'}</span>
+                  <span className="text-xs text-slate-400">{revealedPillars.format ? "\u2713" : "+"}</span>
                 </header>
                 <h4 className="text-xs font-semibold text-white mb-1">Structure & layout</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
-                  {revealedPillars.format ? stage.pillars.format : 'Click to inspect table/bullet structure...'}
+                  {revealedPillars.format ? stage.pillars.format : "Click to inspect table/bullet structure..."}
                 </p>
               </article>
             </div>
 
-            {/* The Master Prompt Reveal */}
+            {
+    /* The Master Prompt Reveal */
+  }
             <article className="p-5 rounded-xl border border-emerald-500/50 bg-emerald-950/20 space-y-3">
               <header className="flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
@@ -308,7 +289,9 @@ export function ChallengesView() {
               </blockquote>
             </article>
 
-            {/* Sample AI Output Preview */}
+            {
+    /* Sample AI Output Preview */
+  }
             <article className="rounded-xl border border-slate-800 bg-[#070b18] p-5">
               <span className="text-xs font-mono uppercase text-slate-400 mb-2 block">
                 Simulated AI Model Output for Master Prompt:
@@ -320,17 +303,19 @@ export function ChallengesView() {
 
             <footer className="flex justify-end pt-2">
               <button
-                type="button"
-                onClick={handleCompletePromptStage}
-                className="px-6 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-cyan-300 hover:opacity-90 transition-opacity text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
-              >
+    type="button"
+    onClick={handleCompletePromptStage}
+    className="px-6 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-cyan-300 hover:opacity-90 transition-opacity text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
+  >
                 <span>CLAIM PROMPT MASTER XP (+100 XP)</span>
                 <CheckCircle2 className="w-4 h-4" />
               </button>
             </footer>
           </section>
 
-          {/* Interactive Prompt Sandbox: Craft Your Own! */}
+          {
+    /* Interactive Prompt Sandbox: Craft Your Own! */
+  }
           <section aria-label="Cadet Prompt Laboratory" className="rounded-2xl border border-cyan-800/60 bg-[#091124] p-6 sm:p-8 space-y-6">
             <header>
               <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
@@ -344,26 +329,28 @@ export function ChallengesView() {
               </p>
             </header>
 
-            {/* Input Form */}
+            {
+    /* Input Form */
+  }
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleEvaluateCustomPrompt();
-              }}
-              className="space-y-3"
-            >
+    onSubmit={(e) => {
+      e.preventDefault();
+      handleEvaluateCustomPrompt();
+    }}
+    className="space-y-3"
+  >
               <fieldset className="border-0 p-0 m-0 space-y-2">
                 <label htmlFor="cadet-prompt-input" className="sr-only">
                   Cadet Custom Prompt
                 </label>
                 <textarea
-                  id="cadet-prompt-input"
-                  value={customPromptText}
-                  onChange={(e) => setCustomPromptText(e.target.value)}
-                  placeholder="Example: Act as a wildlife biologist. Explain photosynthesis to a 6th-grade class in a 3-step bulleted list with an everyday plant analogy..."
-                  rows={4}
-                  className="w-full p-4 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:border-cyan-500 focus:outline-none font-mono"
-                />
+    id="cadet-prompt-input"
+    value={customPromptText}
+    onChange={(e) => setCustomPromptText(e.target.value)}
+    placeholder="Example: Act as a wildlife biologist. Explain photosynthesis to a 6th-grade class in a 3-step bulleted list with an everyday plant analogy..."
+    rows={4}
+    className="w-full p-4 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:border-cyan-500 focus:outline-none font-mono"
+  />
               </fieldset>
 
               <div className="flex flex-wrap items-center justify-between gap-3">
@@ -371,96 +358,76 @@ export function ChallengesView() {
                   Tip: Include words like <code className="text-cyan-300 font-mono">Explain</code>, <code className="text-cyan-300 font-mono">for students</code>, <code className="text-cyan-300 font-mono">bullet points</code>.
                 </div>
                 <button
-                  type="submit"
-                  disabled={isGenerating || !customPromptText.trim()}
-                  className={`px-6 py-2.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
-                    !customPromptText.trim()
-                      ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
-                      : 'bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-md'
-                  }`}
-                >
-                  {isGenerating ? (
-                    <>
+    type="submit"
+    disabled={isGenerating || !customPromptText.trim()}
+    className={`px-6 py-2.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${!customPromptText.trim() ? "bg-slate-800 text-slate-500 cursor-not-allowed" : "bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-md"}`}
+  >
+                  {isGenerating ? <>
                       <RefreshCw className="w-3.5 h-3.5 animate-spin" />
                       Auditing...
-                    </>
-                  ) : (
-                    <>
+                    </> : <>
                       <Send className="w-3.5 h-3.5" />
                       Test & Grade Prompt
-                    </>
-                  )}
+                    </>}
                 </button>
               </div>
             </form>
 
-            {/* Real-time Pillar Rubric */}
-            {customScore && (
-              <output className="block p-4 rounded-xl border border-slate-800 bg-[#070b18] space-y-4 animate-fadeIn">
+            {
+    /* Real-time Pillar Rubric */
+  }
+            {customScore && <output className="block p-4 rounded-xl border border-slate-800 bg-[#070b18] space-y-4 animate-fadeIn">
                 <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block">
                   Pillar Audit Report:
                 </span>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div
-                    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${
-                      customScore.task
-                        ? 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300'
-                        : 'border-rose-500/60 bg-rose-950/20 text-rose-300'
-                    }`}
-                  >
-                    {customScore.task ? '✓ Task Clear' : '✗ Needs Verb/Task'}
+    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${customScore.task ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300" : "border-rose-500/60 bg-rose-950/20 text-rose-300"}`}
+  >
+                    {customScore.task ? "\u2713 Task Clear" : "\u2717 Needs Verb/Task"}
                   </div>
                   <div
-                    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${
-                      customScore.details
-                        ? 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300'
-                        : 'border-rose-500/60 bg-rose-950/20 text-rose-300'
-                    }`}
-                  >
-                    {customScore.details ? '✓ Detailed Scope' : '✗ Too Brief'}
+    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${customScore.details ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300" : "border-rose-500/60 bg-rose-950/20 text-rose-300"}`}
+  >
+                    {customScore.details ? "\u2713 Detailed Scope" : "\u2717 Too Brief"}
                   </div>
                   <div
-                    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${
-                      customScore.audience
-                        ? 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300'
-                        : 'border-rose-500/60 bg-rose-950/20 text-rose-300'
-                    }`}
-                  >
-                    {customScore.audience ? '✓ Audience Set' : '✗ Missing Audience'}
+    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${customScore.audience ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300" : "border-rose-500/60 bg-rose-950/20 text-rose-300"}`}
+  >
+                    {customScore.audience ? "\u2713 Audience Set" : "\u2717 Missing Audience"}
                   </div>
                   <div
-                    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${
-                      customScore.format
-                        ? 'border-emerald-500/60 bg-emerald-950/20 text-emerald-300'
-                        : 'border-rose-500/60 bg-rose-950/20 text-rose-300'
-                    }`}
-                  >
-                    {customScore.format ? '✓ Format Defined' : '✗ Missing Format'}
+    className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${customScore.format ? "border-emerald-500/60 bg-emerald-950/20 text-emerald-300" : "border-rose-500/60 bg-rose-950/20 text-rose-300"}`}
+  >
+                    {customScore.format ? "\u2713 Format Defined" : "\u2717 Missing Format"}
                   </div>
                 </div>
 
-                {customGeneratedOutput && (
-                  <div className="mt-4 pt-4 border-t border-slate-800">
+                {customGeneratedOutput && <div className="mt-4 pt-4 border-t border-slate-800">
                     <span className="text-xs font-mono uppercase text-slate-400 block mb-2">
                       Live AI Output:
                     </span>
                     <pre className="text-xs text-slate-200 font-mono whitespace-pre-wrap leading-relaxed bg-slate-900/60 p-4 rounded-lg border border-slate-800">
                       {customGeneratedOutput}
                     </pre>
-                  </div>
-                )}
-              </output>
-            )}
+                  </div>}
+              </output>}
           </section>
-        </section>
-      )}
+        </section>}
 
-      {/* ========================================================================= */}
-      {/* TAB 2: MISSION 3 - AI ETHICS (WHAT WOULD YOU DO?) */}
-      {/* ========================================================================= */}
-      {activeTab === 'ethics' && (
-        <section aria-label="Mission 3: AI Ethics" className="space-y-8 animate-fadeIn">
-          {/* Mission Header */}
+      {
+    /* ========================================================================= */
+  }
+      {
+    /* TAB 2: MISSION 3 - AI ETHICS (WHAT WOULD YOU DO?) */
+  }
+      {
+    /* ========================================================================= */
+  }
+      {activeTab === "ethics" && <section aria-label="Mission 3: AI Ethics" className="space-y-8 animate-fadeIn">
+          {
+    /* Mission Header */
+  }
           <article className="rounded-2xl border border-indigo-500/30 bg-[#090f24] p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
@@ -483,36 +450,31 @@ export function ChallengesView() {
             </div>
           </article>
 
-          {/* Scenario Stepper Indicators */}
+          {
+    /* Scenario Stepper Indicators */
+  }
           <nav aria-label="Ethics Cases" className="flex items-center gap-2 overflow-x-auto pb-2">
             {ETHICS_SCENARIOS.map((sc, idx) => {
-              const answered = selectedEthicsChoices[sc.id] !== undefined;
-              const isCurrent = idx === scenarioIndex;
-
-              return (
-                <button
-                  key={sc.id}
-                  type="button"
-                  onClick={() => {
-                    sound.playClick();
-                    setScenarioIndex(idx);
-                  }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all whitespace-nowrap flex items-center gap-2 border cursor-pointer ${
-                    isCurrent
-                      ? 'bg-indigo-500/30 text-indigo-200 border-indigo-400'
-                      : answered
-                      ? 'bg-slate-900 text-slate-300 border-emerald-500/40'
-                      : 'bg-slate-900/60 text-slate-500 border-slate-800'
-                  }`}
-                >
+    const answered = selectedEthicsChoices[sc.id] !== void 0;
+    const isCurrent = idx === scenarioIndex;
+    return <button
+      key={sc.id}
+      type="button"
+      onClick={() => {
+        sound.playClick();
+        setScenarioIndex(idx);
+      }}
+      className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all whitespace-nowrap flex items-center gap-2 border cursor-pointer ${isCurrent ? "bg-indigo-500/30 text-indigo-200 border-indigo-400" : answered ? "bg-slate-900 text-slate-300 border-emerald-500/40" : "bg-slate-900/60 text-slate-500 border-slate-800"}`}
+    >
                   <span>Case 0{idx + 1}</span>
                   {answered && <span className="text-emerald-400">✓</span>}
-                </button>
-              );
-            })}
+                </button>;
+  })}
           </nav>
 
-          {/* Current Scenario Card */}
+          {
+    /* Current Scenario Card */
+  }
           <article className="rounded-2xl border border-slate-800 bg-[#080d1e] p-6 sm:p-8 space-y-6">
             <header>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">
@@ -523,30 +485,28 @@ export function ChallengesView() {
               </blockquote>
             </header>
 
-            {/* Options List */}
+            {
+    /* Options List */
+  }
             <div className="space-y-4">
               {currentScenario.options.map((opt) => {
-                const isSelected = selectedEthicsChoices[currentScenario.id] === opt.id;
-                const hasSelectedAny = selectedEthicsChoices[currentScenario.id] !== undefined;
-
-                let cardStyle = 'border-slate-800 bg-slate-900/60 hover:border-slate-700 text-slate-200';
-
-                if (hasSelectedAny) {
-                  if (opt.isBestChoice) {
-                    cardStyle = 'border-emerald-500/80 bg-emerald-950/30 text-emerald-100';
-                  } else if (isSelected && !opt.isBestChoice) {
-                    cardStyle = 'border-rose-500/80 bg-rose-950/30 text-rose-100';
-                  } else {
-                    cardStyle = 'border-slate-800/60 bg-slate-950/40 text-slate-400 opacity-60';
-                  }
-                }
-
-                return (
-                  <div
-                    key={opt.id}
-                    onClick={() => handleEthicsSelect(opt.id)}
-                    className={`rounded-xl border p-5 transition-all cursor-pointer ${cardStyle}`}
-                  >
+    const isSelected = selectedEthicsChoices[currentScenario.id] === opt.id;
+    const hasSelectedAny = selectedEthicsChoices[currentScenario.id] !== void 0;
+    let cardStyle = "border-slate-800 bg-slate-900/60 hover:border-slate-700 text-slate-200";
+    if (hasSelectedAny) {
+      if (opt.isBestChoice) {
+        cardStyle = "border-emerald-500/80 bg-emerald-950/30 text-emerald-100";
+      } else if (isSelected && !opt.isBestChoice) {
+        cardStyle = "border-rose-500/80 bg-rose-950/30 text-rose-100";
+      } else {
+        cardStyle = "border-slate-800/60 bg-slate-950/40 text-slate-400 opacity-60";
+      }
+    }
+    return <div
+      key={opt.id}
+      onClick={() => handleEthicsSelect(opt.id)}
+      className={`rounded-xl border p-5 transition-all cursor-pointer ${cardStyle}`}
+    >
                     <div className="flex items-start gap-3">
                       <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-slate-800 text-xs font-mono font-bold text-slate-200 shrink-0">
                         {opt.id}
@@ -556,66 +516,61 @@ export function ChallengesView() {
                           {opt.text}
                         </div>
 
-                        {/* Immediate Explanation on Choice */}
-                        {hasSelectedAny && (
-                          <aside className="mt-3 pt-3 border-t border-slate-800/80 text-xs space-y-1">
+                        {
+      /* Immediate Explanation on Choice */
+    }
+                        {hasSelectedAny && <aside className="mt-3 pt-3 border-t border-slate-800/80 text-xs space-y-1">
                             <div className="font-bold">{opt.feedback}</div>
                             <div className="text-slate-300 italic">
                               Principle: {opt.guideline}
                             </div>
-                          </aside>
-                        )}
+                          </aside>}
                       </div>
                     </div>
-                  </div>
-                );
-              })}
+                  </div>;
+  })}
             </div>
 
-            {/* Stepper Navigation */}
+            {
+    /* Stepper Navigation */
+  }
             <footer className="flex items-center justify-between pt-4 border-t border-slate-800">
               <button
-                type="button"
-                onClick={() => {
-                  sound.playClick();
-                  setScenarioIndex((prev) => Math.max(0, prev - 1));
-                }}
-                disabled={scenarioIndex === 0}
-                className="text-xs font-mono text-slate-400 hover:text-slate-200 disabled:opacity-40 cursor-pointer"
-              >
+    type="button"
+    onClick={() => {
+      sound.playClick();
+      setScenarioIndex((prev) => Math.max(0, prev - 1));
+    }}
+    disabled={scenarioIndex === 0}
+    className="text-xs font-mono text-slate-400 hover:text-slate-200 disabled:opacity-40 cursor-pointer"
+  >
                 ← Previous Case
               </button>
 
-              {scenarioIndex < ETHICS_SCENARIOS.length - 1 ? (
-                <button
-                  type="button"
-                  onClick={() => {
-                    sound.playClick();
-                    setScenarioIndex((prev) => prev + 1);
-                  }}
-                  className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-indigo-400 to-cyan-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
-                >
+              {scenarioIndex < ETHICS_SCENARIOS.length - 1 ? <button
+    type="button"
+    onClick={() => {
+      sound.playClick();
+      setScenarioIndex((prev) => prev + 1);
+    }}
+    className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-indigo-400 to-cyan-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
+  >
                   <span>Next Case</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  onClick={() => {
-                    sound.playSuccess();
-                    completeMission('mission_3', 100, 'ethics-expert');
-                    setCurrentView('detective');
-                  }}
-                  className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
-                >
+                </button> : <button
+    type="button"
+    onClick={() => {
+      sound.playSuccess();
+      completeMission("mission_3", 100, "ethics-expert");
+      setCurrentView("detective");
+    }}
+    className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
+  >
                   <span>Advance to AI Detective</span>
                   <ArrowRight className="w-4 h-4" />
-                </button>
-              )}
+                </button>}
             </footer>
           </article>
-        </section>
-      )}
-    </main>
-  );
+        </section>}
+    </main>;
 }

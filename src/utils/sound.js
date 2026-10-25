@@ -1,13 +1,15 @@
 // Web Audio API Synthesizer for tactile game feedback
 
 class SoundManager {
-  private ctx: AudioContext | null = null;
-  public enabled: boolean = true;
+  constructor() {
+    this.ctx = null;
+    this.enabled = true;
+  }
 
-  private getContext(): AudioContext | null {
+  getContext() {
     if (typeof window === 'undefined') return null;
     if (!this.ctx) {
-      const AudioCtx = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
       if (AudioCtx) {
         this.ctx = new AudioCtx();
       }
@@ -50,7 +52,6 @@ class SoundManager {
       if (!ctx) return;
       
       const now = ctx.currentTime;
-      // High cheerful ascending chime (C5 -> E5 -> G5)
       const freqs = [523.25, 659.25, 783.99];
       freqs.forEach((freq, idx) => {
         const osc = ctx.createOscillator();
@@ -138,7 +139,6 @@ class SoundManager {
       if (!ctx) return;
       const now = ctx.currentTime;
 
-      // Radar scan pulse + bell
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.type = 'sine';

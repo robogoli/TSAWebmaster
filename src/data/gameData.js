@@ -1,6 +1,6 @@
-import { Badge, DailyChallenge, DetectiveCase, EthicsScenario, LevelInfo, PromptChallengeStage, SkillNode } from '../types/game';
 
-export const LEVELS: LevelInfo[] = [
+
+export const LEVELS = [
   { level: 1, title: 'AI Rookie', minXp: 0, maxXp: 99, nextLevelTitle: 'AI Explorer', color: 'from-blue-500 to-cyan-500' },
   { level: 2, title: 'AI Explorer', minXp: 100, maxXp: 249, nextLevelTitle: 'AI Pioneer', color: 'from-cyan-500 to-teal-500' },
   { level: 3, title: 'AI Pioneer', minXp: 250, maxXp: 399, nextLevelTitle: 'AI Architect', color: 'from-indigo-500 to-purple-500' },
@@ -8,7 +8,7 @@ export const LEVELS: LevelInfo[] = [
   { level: 5, title: 'AI Master', minXp: 600, maxXp: 1000, nextLevelTitle: 'Supreme AI Grandmaster', color: 'from-amber-400 to-amber-600' },
 ];
 
-export const INITIAL_BADGES: Badge[] = [
+export const INITIAL_BADGES = [
   {
     id: 'ai-pathfinder',
     name: 'AI Pathfinder',
@@ -101,16 +101,9 @@ export const INITIAL_BADGES: Badge[] = [
   },
 ];
 
-export interface AiOrNotItem {
-  id: string;
-  name: string;
-  icon: string;
-  isAi: boolean;
-  explanation: string;
-  techType: string;
-}
 
-export const AI_OR_NOT_ITEMS: AiOrNotItem[] = [
+
+export const AI_OR_NOT_ITEMS = [
   {
     id: 'chatbot',
     name: 'AI Chatbot (e.g. Gemini, ChatGPT)',
@@ -213,7 +206,7 @@ export const MISSION_1_QUIZ = [
   },
 ];
 
-export const PROMPT_CHALLENGE_STAGES: PromptChallengeStage[] = [
+export const PROMPT_CHALLENGE_STAGES = [
   {
     id: 'stage1',
     label: 'Challenge: The Vague Space Prompt',
@@ -242,7 +235,7 @@ export const PROMPT_CHALLENGE_STAGES: PromptChallengeStage[] = [
   }
 ];
 
-export const ETHICS_SCENARIOS: EthicsScenario[] = [
+export const ETHICS_SCENARIOS = [
   {
     id: 'homework_essay',
     title: 'Case 01: The Homework Essay Dilemma',
@@ -338,7 +331,7 @@ export const ETHICS_SCENARIOS: EthicsScenario[] = [
   },
 ];
 
-export const DETECTIVE_CASES: DetectiveCase[] = [
+export const DETECTIVE_CASES = [
   {
     id: 'case_apollo',
     title: 'Case 01: The Apollo 11 Lunar Mission',
@@ -455,7 +448,7 @@ export const DETECTIVE_CASES: DetectiveCase[] = [
   },
 ];
 
-export const DAILY_CHALLENGES: DailyChallenge[] = [
+export const DAILY_CHALLENGES = [
   {
     id: 'dc_1',
     date: 'Today',
@@ -496,7 +489,7 @@ export const DAILY_CHALLENGES: DailyChallenge[] = [
   }
 ];
 
-export const SKILL_TREE_NODES: SkillNode[] = [
+export const SKILL_TREE_NODES = [
   // TIER 0: Root Foundation
   {
     id: 'root_ai_basics',

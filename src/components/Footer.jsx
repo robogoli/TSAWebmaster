@@ -1,11 +1,7 @@
-import React from 'react';
-import { useGame } from '../context/GameContext';
-
-export const Footer: React.FC = () => {
+import { useGame } from "../context/GameContext";
+export const Footer = () => {
   const { setCurrentView } = useGame();
-
-  return (
-    <footer className="w-full border-t border-slate-800/80 bg-[#060a14] py-12 px-4 sm:px-6 lg:px-8 mt-20">
+  return <footer className="w-full border-t border-slate-800/80 bg-[#060a14] py-12 px-4 sm:px-6 lg:px-8 mt-20">
       <div className="mx-auto max-w-7xl">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="space-y-3 md:col-span-2">
@@ -33,37 +29,37 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-sm text-slate-400 list-none p-0 m-0">
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('learning-path')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
-                >
+    type="button"
+    onClick={() => setCurrentView("learning-path")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
+  >
                   Track 1: AI foundations
                 </button>
               </li>
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('tool-lab')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
-                >
+    type="button"
+    onClick={() => setCurrentView("tool-lab")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
+  >
                   Track 2: Tools & techniques
                 </button>
               </li>
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('responsible-ai')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
-                >
+    type="button"
+    onClick={() => setCurrentView("responsible-ai")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
+  >
                   Track 3: Responsible AI
                 </button>
               </li>
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('fact-check')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left font-semibold text-emerald-400"
-                >
+    type="button"
+    onClick={() => setCurrentView("fact-check")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left font-semibold text-emerald-400"
+  >
                   Daily: Fact-check the fluent
                 </button>
               </li>
@@ -77,28 +73,28 @@ export const Footer: React.FC = () => {
             <ul className="space-y-2 text-sm text-slate-400 list-none p-0 m-0">
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('practice-missions')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
-                >
+    type="button"
+    onClick={() => setCurrentView("practice-missions")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
+  >
                   Practice Missions (6 challenges)
                 </button>
               </li>
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('progress')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
-                >
+    type="button"
+    onClick={() => setCurrentView("progress")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
+  >
                   Dashboard & Badges
                 </button>
               </li>
               <li>
                 <button
-                  type="button"
-                  onClick={() => setCurrentView('skilltree')}
-                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
-                >
+    type="button"
+    onClick={() => setCurrentView("skilltree")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
+  >
                   Skill Tree Topology
                 </button>
               </li>
@@ -108,7 +104,7 @@ export const Footer: React.FC = () => {
 
         <div className="pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-mono">
           <div>
-            © {new Date().getFullYear()} AI Quest. Built for students, educators, and future AI pioneers.
+            © {(/* @__PURE__ */ new Date()).getFullYear()} AI Quest. Built for students, educators, and future AI pioneers.
           </div>
           <div className="flex items-center gap-6">
             <span>Critical Thinking First</span>
@@ -117,6 +113,5 @@ export const Footer: React.FC = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
