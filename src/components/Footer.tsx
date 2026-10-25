@@ -1,10 +1,8 @@
 import React from 'react';
-import { ShieldCheck, Sparkles, BookOpen, HelpCircle } from 'lucide-react';
 import { useGame } from '../context/GameContext';
-import { ViewMode } from '../types/game';
 
 export const Footer: React.FC = () => {
-  const { setCurrentView, openDailyModal } = useGame();
+  const { setCurrentView } = useGame();
 
   return (
     <footer className="w-full border-t border-slate-800/80 bg-[#060a14] py-12 px-4 sm:px-6 lg:px-8 mt-20">
@@ -12,106 +10,105 @@ export const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-10">
           <div className="space-y-3 md:col-span-2">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold tracking-wider bg-gradient-to-r from-cyan-400 to-amber-300 bg-clip-text text-transparent">
+              <span className="text-xl font-extrabold tracking-wider text-white">
                 AI QUEST
               </span>
             </div>
             <p className="text-sm text-slate-400 max-w-md leading-relaxed">
-              “Learn AI. Beat the Challenges. Master the Future.” An interactive training academy empowering students to master machine learning principles, prompt engineering, AI ethics, and hallucination fact-checking.
+              AI Quest is a learning platform that aims to teach high school students how to properly use AI, spot AI, and how to use it to fit your needs.
             </p>
-            <div className="flex items-center gap-4 text-xs text-slate-500 pt-2">
-              <span>Interactive Simulator</span>
+            <div className="flex items-center gap-4 text-xs font-mono text-slate-500 pt-2">
+              <span>Grades 09–12</span>
               <span aria-hidden="true">·</span>
-              <span>K-12 & College Ready</span>
+              <span>Evidence Before Confidence</span>
               <span aria-hidden="true">·</span>
-              <span>Responsible AI Standard</span>
+              <span>Human Responsibility</span>
             </div>
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-3">
-              Academy Tracks
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-3">
+              Learning Tracks
             </h4>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <ul className="space-y-2 text-sm text-slate-400 list-none p-0 m-0">
               <li>
                 <button
-                  onClick={() => setCurrentView('learn')}
-                  className="hover:text-cyan-300 transition-colors"
+                  type="button"
+                  onClick={() => setCurrentView('learning-path')}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
                 >
-                  Mission 1: Understand AI
+                  Track 1: AI foundations
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setCurrentView('challenges')}
-                  className="hover:text-cyan-300 transition-colors"
+                  type="button"
+                  onClick={() => setCurrentView('tool-lab')}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
                 >
-                  Mission 2: Fix the Prompt
+                  Track 2: Tools & techniques
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setCurrentView('challenges')}
-                  className="hover:text-cyan-300 transition-colors"
+                  type="button"
+                  onClick={() => setCurrentView('responsible-ai')}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
                 >
-                  Mission 3: AI Ethics Arena
+                  Track 3: Responsible AI
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => setCurrentView('detective')}
-                  className="hover:text-cyan-300 transition-colors"
+                  type="button"
+                  onClick={() => setCurrentView('fact-check')}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left font-semibold text-emerald-400"
                 >
-                  Bonus: AI Detective
+                  Daily: Fact-check the fluent
                 </button>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="text-xs font-semibold uppercase tracking-wider text-slate-300 mb-3">
-              Cadet Resources
+            <h4 className="text-xs font-mono font-bold uppercase tracking-wider text-slate-300 mb-3">
+              Practice & Progress
             </h4>
-            <ul className="space-y-2 text-sm text-slate-400">
+            <ul className="space-y-2 text-sm text-slate-400 list-none p-0 m-0">
               <li>
                 <button
-                  onClick={() => setCurrentView('skilltree')}
-                  className="hover:text-cyan-300 transition-colors"
+                  type="button"
+                  onClick={() => setCurrentView('practice-missions')}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
                 >
-                  Neural Skill Tree
+                  Practice Missions (6 challenges)
                 </button>
               </li>
               <li>
                 <button
+                  type="button"
                   onClick={() => setCurrentView('progress')}
-                  className="hover:text-cyan-300 transition-colors"
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
                 >
-                  Master Journey & Badges
+                  Dashboard & Badges
                 </button>
               </li>
               <li>
                 <button
-                  onClick={openDailyModal}
-                  className="hover:text-cyan-300 transition-colors"
+                  type="button"
+                  onClick={() => setCurrentView('skilltree')}
+                  className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
                 >
-                  Today's AI Challenge
-                </button>
-              </li>
-              <li>
-                <button
-                  onClick={() => setCurrentView('profile')}
-                  className="hover:text-cyan-300 transition-colors"
-                >
-                  Cadet Credentials & ID
+                  Skill Tree Topology
                 </button>
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+        <div className="pt-6 border-t border-slate-800/60 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500 font-mono">
           <div>
-            © {new Date().getFullYear()} AI Quest Academy. Built for students, educators, and future AI pioneers.
+            © {new Date().getFullYear()} AI Quest. Built for students, educators, and future AI pioneers.
           </div>
           <div className="flex items-center gap-6">
             <span>Critical Thinking First</span>

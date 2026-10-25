@@ -1,32 +1,24 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import {
   Wand2,
   Scale,
-  Sparkles,
   ArrowRight,
   CheckCircle2,
-  AlertCircle,
-  HelpCircle,
-  Layers,
   Send,
   RefreshCw,
-  Award,
-  Play,
-  Check,
 } from 'lucide-react';
 import { useGame } from '../context/GameContext';
 import { ETHICS_SCENARIOS, PROMPT_CHALLENGE_STAGES } from '../data/gameData';
-import { EthicsScenario } from '../types/game';
 import { sound } from '../utils/sound';
 
-export const ChallengesView: React.FC = () => {
+export function ChallengesView() {
   const { state, completeMission, setCurrentView, challengesTab, setChallengesTab } = useGame();
   const activeTab = challengesTab;
   const setActiveTab = setChallengesTab;
 
   // Mission 2: Prompt Engineering State
-  const [activeStageIndex, setActiveStageIndex] = useState(0);
-  const [revealedPillars, setRevealedPillars] = useState<{ [key: string]: boolean }>({});
+  const [activeStageIndex] = useState(0);
+  const [revealedPillars, setRevealedPillars] = useState<Record<string, boolean>>({});
   const [customPromptText, setCustomPromptText] = useState('');
   const [customGeneratedOutput, setCustomGeneratedOutput] = useState<string | null>(null);
   const [customScore, setCustomScore] = useState<{ task: boolean; details: boolean; audience: boolean; format: boolean } | null>(null);
@@ -103,7 +95,6 @@ export const ChallengesView: React.FC = () => {
     const option = currentScenario.options.find((o) => o.id === choice);
     if (option?.isBestChoice) {
       sound.playSuccess();
-      // Check if all scenarios evaluated
       const updatedChoices = { ...selectedEthicsChoices, [currentScenario.id]: choice };
       const allScenariosDone = ETHICS_SCENARIOS.every((s) => updatedChoices[s.id] !== undefined);
       if (allScenariosDone) {
@@ -115,9 +106,9 @@ export const ChallengesView: React.FC = () => {
   };
 
   return (
-    <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <main className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       {/* Top Mission Switcher */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
+      <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
         <div>
           <div className="text-xs font-mono font-bold tracking-widest text-teal-400 uppercase mb-1">
             ACADEMY TRAINING ARENA
@@ -128,13 +119,14 @@ export const ChallengesView: React.FC = () => {
         </div>
 
         {/* Tab switch */}
-        <div className="flex items-center gap-2 p-1 rounded-xl bg-slate-900 border border-slate-800">
+        <nav aria-label="Mission Tab Selection" className="flex items-center gap-2 p-1 rounded-xl bg-slate-900 border border-slate-800">
           <button
+            type="button"
             onClick={() => {
               sound.playClick();
               setActiveTab('prompt');
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'prompt'
                 ? 'bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200'
@@ -146,11 +138,12 @@ export const ChallengesView: React.FC = () => {
           </button>
 
           <button
+            type="button"
             onClick={() => {
               sound.playClick();
               setActiveTab('ethics');
             }}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${
               activeTab === 'ethics'
                 ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm'
                 : 'text-slate-400 hover:text-slate-200'
@@ -160,16 +153,16 @@ export const ChallengesView: React.FC = () => {
             <span>MISSION 3: AI ETHICS</span>
             {isMission3Done && <span className="text-emerald-400">✓</span>}
           </button>
-        </div>
-      </div>
+        </nav>
+      </header>
 
       {/* ========================================================================= */}
       {/* TAB 1: MISSION 2 - AI SKILLS (FIX THE PROMPT) */}
       {/* ========================================================================= */}
       {activeTab === 'prompt' && (
-        <div className="space-y-8 animate-fadeIn">
+        <section aria-label="Mission 2: Fix the Prompt" className="space-y-8 animate-fadeIn">
           {/* Mission Intro Banner */}
-          <div className="rounded-2xl border border-teal-500/30 bg-[#081224] p-6 sm:p-8">
+          <article className="rounded-2xl border border-teal-500/30 bg-[#081224] p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <span className="text-xs font-mono font-bold uppercase tracking-wider text-teal-400">
@@ -183,42 +176,42 @@ export const ChallengesView: React.FC = () => {
                 </p>
               </div>
 
-              <div className="text-right">
-                <span className="text-xs font-mono font-bold text-amber-300 bg-amber-950/60 border border-amber-500/40 px-3 py-1.5 rounded-full">
+              <aside className="text-right">
+                <span className="text-xs font-mono font-bold text-amber-300 bg-amber-950/60 border border-amber-500/40 px-3 py-1.5 rounded-full inline-block">
                   🏆 +100 XP REWARD
                 </span>
-              </div>
+              </aside>
             </div>
-          </div>
+          </article>
 
           {/* Before & After Interactive Comparison */}
-          <div className="rounded-2xl border border-slate-800 bg-[#091124] p-6 sm:p-8 space-y-6">
-            <div className="flex items-center justify-between border-b border-slate-800 pb-4">
+          <section aria-label="Deconstructing Weak Prompts" className="rounded-2xl border border-slate-800 bg-[#091124] p-6 sm:p-8 space-y-6">
+            <header className="flex items-center justify-between border-b border-slate-800 pb-4">
               <h3 className="text-lg font-bold text-white">
                 Deconstructing a Weak Prompt
               </h3>
-              <div className="text-xs text-slate-400 font-mono">
+              <span className="text-xs text-slate-400 font-mono">
                 Click each Pillar to reveal how to transform it
-              </div>
-            </div>
+              </span>
+            </header>
 
             {/* Weak Prompt Banner */}
-            <div className="p-4 rounded-xl border border-rose-500/40 bg-rose-950/20">
-              <div className="text-[11px] font-mono font-bold text-rose-300 uppercase tracking-wider mb-1">
+            <article className="p-4 rounded-xl border border-rose-500/40 bg-rose-950/20">
+              <span className="text-[11px] font-mono font-bold text-rose-300 uppercase tracking-wider block mb-1">
                 ORIGINAL WEAK PROMPT (LEVEL 1)
-              </div>
-              <div className="text-xl font-bold text-white font-mono">
+              </span>
+              <p className="text-xl font-bold text-white font-mono">
                 “{stage.weakPrompt}”
-              </div>
+              </p>
               <p className="text-xs text-slate-300 mt-1">
                 Too vague! The AI has no idea if you want a poem for a toddler, a doctoral dissertation, or a list of planets.
               </p>
-            </div>
+            </article>
 
             {/* The 4 Pillars Grid */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {/* Pillar 1: Task */}
-              <div
+              <article
                 onClick={() => togglePillar('task')}
                 className={`p-4 rounded-xl border cursor-pointer transition-all ${
                   revealedPillars.task
@@ -226,20 +219,20 @@ export const ChallengesView: React.FC = () => {
                     : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
+                <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-teal-300 uppercase">
                     1. TASK
                   </span>
                   <span className="text-xs text-slate-400">{revealedPillars.task ? '✓' : '+'}</span>
-                </div>
-                <div className="text-xs font-semibold text-white mb-1">What you want done</div>
+                </header>
+                <h4 className="text-xs font-semibold text-white mb-1">What you want done</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   {revealedPillars.task ? stage.pillars.task : 'Click to inspect required action & role...'}
                 </p>
-              </div>
+              </article>
 
               {/* Pillar 2: Details */}
-              <div
+              <article
                 onClick={() => togglePillar('details')}
                 className={`p-4 rounded-xl border cursor-pointer transition-all ${
                   revealedPillars.details
@@ -247,20 +240,20 @@ export const ChallengesView: React.FC = () => {
                     : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
+                <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-cyan-300 uppercase">
                     2. DETAILS
                   </span>
                   <span className="text-xs text-slate-400">{revealedPillars.details ? '✓' : '+'}</span>
-                </div>
-                <div className="text-xs font-semibold text-white mb-1">Topic, scope & limits</div>
+                </header>
+                <h4 className="text-xs font-semibold text-white mb-1">Topic, scope & limits</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   {revealedPillars.details ? stage.pillars.details : 'Click to inspect constraints & key elements...'}
                 </p>
-              </div>
+              </article>
 
               {/* Pillar 3: Audience */}
-              <div
+              <article
                 onClick={() => togglePillar('audience')}
                 className={`p-4 rounded-xl border cursor-pointer transition-all ${
                   revealedPillars.audience
@@ -268,20 +261,20 @@ export const ChallengesView: React.FC = () => {
                     : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
+                <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-indigo-300 uppercase">
                     3. AUDIENCE
                   </span>
                   <span className="text-xs text-slate-400">{revealedPillars.audience ? '✓' : '+'}</span>
-                </div>
-                <div className="text-xs font-semibold text-white mb-1">Who is it for?</div>
+                </header>
+                <h4 className="text-xs font-semibold text-white mb-1">Who is it for?</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   {revealedPillars.audience ? stage.pillars.audience : 'Click to inspect reading level & tone...'}
                 </p>
-              </div>
+              </article>
 
               {/* Pillar 4: Format */}
-              <div
+              <article
                 onClick={() => togglePillar('format')}
                 className={`p-4 rounded-xl border cursor-pointer transition-all ${
                   revealedPillars.format
@@ -289,56 +282,57 @@ export const ChallengesView: React.FC = () => {
                     : 'border-slate-800 bg-slate-900/60 hover:border-slate-700'
                 }`}
               >
-                <div className="flex items-center justify-between mb-2">
+                <header className="flex items-center justify-between mb-2">
                   <span className="text-xs font-mono font-bold text-amber-300 uppercase">
                     4. FORMAT
                   </span>
                   <span className="text-xs text-slate-400">{revealedPillars.format ? '✓' : '+'}</span>
-                </div>
-                <div className="text-xs font-semibold text-white mb-1">Structure & layout</div>
+                </header>
+                <h4 className="text-xs font-semibold text-white mb-1">Structure & layout</h4>
                 <p className="text-xs text-slate-300 leading-relaxed">
                   {revealedPillars.format ? stage.pillars.format : 'Click to inspect table/bullet structure...'}
                 </p>
-              </div>
+              </article>
             </div>
 
             {/* The Master Prompt Reveal */}
-            <div className="p-5 rounded-xl border border-emerald-500/50 bg-emerald-950/20 space-y-3">
-              <div className="flex items-center justify-between">
+            <article className="p-5 rounded-xl border border-emerald-500/50 bg-emerald-950/20 space-y-3">
+              <header className="flex items-center justify-between">
                 <span className="text-xs font-mono font-bold text-emerald-400 uppercase tracking-wider">
                   ⭐ THE MASTER ENGINEERED PROMPT (LEVEL 4)
                 </span>
                 <span className="text-xs text-emerald-400 font-mono">Precision: 100%</span>
-              </div>
-              <p className="text-sm font-mono text-emerald-100 bg-slate-950/60 p-4 rounded-lg border border-emerald-900/50 leading-relaxed">
+              </header>
+              <blockquote className="text-sm font-mono text-emerald-100 bg-slate-950/60 p-4 rounded-lg border border-emerald-900/50 leading-relaxed m-0">
                 "{stage.improvedPrompt}"
-              </p>
-            </div>
+              </blockquote>
+            </article>
 
             {/* Sample AI Output Preview */}
-            <div className="rounded-xl border border-slate-800 bg-[#070b18] p-5">
-              <div className="text-xs font-mono uppercase text-slate-400 mb-2">
+            <article className="rounded-xl border border-slate-800 bg-[#070b18] p-5">
+              <span className="text-xs font-mono uppercase text-slate-400 mb-2 block">
                 Simulated AI Model Output for Master Prompt:
-              </div>
+              </span>
               <pre className="text-xs text-slate-200 font-mono whitespace-pre-wrap leading-relaxed bg-slate-900/60 p-4 rounded-lg border border-slate-800">
                 {stage.sampleOutput}
               </pre>
-            </div>
+            </article>
 
-            <div className="flex justify-end pt-2">
+            <footer className="flex justify-end pt-2">
               <button
+                type="button"
                 onClick={handleCompletePromptStage}
-                className="px-6 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-cyan-300 hover:opacity-90 transition-opacity text-xs font-mono uppercase tracking-wider flex items-center gap-2"
+                className="px-6 py-3 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-teal-400 to-cyan-300 hover:opacity-90 transition-opacity text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
               >
                 <span>CLAIM PROMPT MASTER XP (+100 XP)</span>
                 <CheckCircle2 className="w-4 h-4" />
               </button>
-            </div>
-          </div>
+            </footer>
+          </section>
 
           {/* Interactive Prompt Sandbox: Craft Your Own! */}
-          <div className="rounded-2xl border border-cyan-800/60 bg-[#091124] p-6 sm:p-8 space-y-6">
-            <div>
+          <section aria-label="Cadet Prompt Laboratory" className="rounded-2xl border border-cyan-800/60 bg-[#091124] p-6 sm:p-8 space-y-6">
+            <header>
               <div className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
                 <Wand2 className="w-4 h-4" /> CADET PROMPT LABORATORY
               </div>
@@ -348,26 +342,38 @@ export const ChallengesView: React.FC = () => {
               <p className="text-xs sm:text-sm text-slate-300 mt-1">
                 Type an improved prompt below. Our automated auditor evaluates your prompt against all 4 Pillars (Task, Details, Audience, Format) and simulates the AI’s output!
               </p>
-            </div>
+            </header>
 
-            {/* Input Box */}
-            <div className="space-y-3">
-              <textarea
-                value={customPromptText}
-                onChange={(e) => setCustomPromptText(e.target.value)}
-                placeholder="Example: Act as a wildlife biologist. Explain photosynthesis to a 6th-grade class in a 3-step bulleted list with an everyday plant analogy..."
-                rows={4}
-                className="w-full p-4 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:border-cyan-500 focus:outline-none font-mono"
-              />
+            {/* Input Form */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleEvaluateCustomPrompt();
+              }}
+              className="space-y-3"
+            >
+              <fieldset className="border-0 p-0 m-0 space-y-2">
+                <label htmlFor="cadet-prompt-input" className="sr-only">
+                  Cadet Custom Prompt
+                </label>
+                <textarea
+                  id="cadet-prompt-input"
+                  value={customPromptText}
+                  onChange={(e) => setCustomPromptText(e.target.value)}
+                  placeholder="Example: Act as a wildlife biologist. Explain photosynthesis to a 6th-grade class in a 3-step bulleted list with an everyday plant analogy..."
+                  rows={4}
+                  className="w-full p-4 rounded-xl border border-slate-700 bg-slate-950 text-slate-100 placeholder:text-slate-600 text-sm focus:border-cyan-500 focus:outline-none font-mono"
+                />
+              </fieldset>
 
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div className="text-xs text-slate-400">
                   Tip: Include words like <code className="text-cyan-300 font-mono">Explain</code>, <code className="text-cyan-300 font-mono">for students</code>, <code className="text-cyan-300 font-mono">bullet points</code>.
                 </div>
                 <button
-                  onClick={handleEvaluateCustomPrompt}
+                  type="submit"
                   disabled={isGenerating || !customPromptText.trim()}
-                  className={`px-6 py-2.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all ${
+                  className={`px-6 py-2.5 rounded-xl font-bold text-xs font-mono uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer ${
                     !customPromptText.trim()
                       ? 'bg-slate-800 text-slate-500 cursor-not-allowed'
                       : 'bg-cyan-500 text-slate-950 hover:bg-cyan-400 shadow-md'
@@ -386,14 +392,14 @@ export const ChallengesView: React.FC = () => {
                   )}
                 </button>
               </div>
-            </div>
+            </form>
 
             {/* Real-time Pillar Rubric */}
             {customScore && (
-              <div className="p-4 rounded-xl border border-slate-800 bg-[#070b18] space-y-4 animate-fadeIn">
-                <div className="text-xs font-mono uppercase tracking-wider text-slate-400">
+              <output className="block p-4 rounded-xl border border-slate-800 bg-[#070b18] space-y-4 animate-fadeIn">
+                <span className="text-xs font-mono uppercase tracking-wider text-slate-400 block">
                   Pillar Audit Report:
-                </div>
+                </span>
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
                   <div
                     className={`p-3 rounded-lg border text-center text-xs font-bold font-mono ${
@@ -443,24 +449,24 @@ export const ChallengesView: React.FC = () => {
                     </pre>
                   </div>
                 )}
-              </div>
+              </output>
             )}
-          </div>
-        </div>
+          </section>
+        </section>
       )}
 
       {/* ========================================================================= */}
       {/* TAB 2: MISSION 3 - AI ETHICS (WHAT WOULD YOU DO?) */}
       {/* ========================================================================= */}
       {activeTab === 'ethics' && (
-        <div className="space-y-8 animate-fadeIn">
+        <section aria-label="Mission 3: AI Ethics" className="space-y-8 animate-fadeIn">
           {/* Mission Header */}
-          <div className="rounded-2xl border border-indigo-500/30 bg-[#090f24] p-6 sm:p-8">
+          <article className="rounded-2xl border border-indigo-500/30 bg-[#090f24] p-6 sm:p-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <div className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">
+                <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">
                   🚨 WHAT WOULD YOU DO? · AI ETHICS ARENA
-                </div>
+                </span>
                 <h2 className="text-xl sm:text-2xl font-black text-white mt-1">
                   Responsible AI Decision Game
                 </h2>
@@ -469,16 +475,16 @@ export const ChallengesView: React.FC = () => {
                 </p>
               </div>
 
-              <div className="text-right">
-                <span className="text-xs font-mono font-bold text-amber-300 bg-amber-950/60 border border-amber-500/40 px-3 py-1.5 rounded-full">
+              <aside className="text-right">
+                <span className="text-xs font-mono font-bold text-amber-300 bg-amber-950/60 border border-amber-500/40 px-3 py-1.5 rounded-full inline-block">
                   🏆 +100 XP REWARD
                 </span>
-              </div>
+              </aside>
             </div>
-          </div>
+          </article>
 
           {/* Scenario Stepper Indicators */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-2">
+          <nav aria-label="Ethics Cases" className="flex items-center gap-2 overflow-x-auto pb-2">
             {ETHICS_SCENARIOS.map((sc, idx) => {
               const answered = selectedEthicsChoices[sc.id] !== undefined;
               const isCurrent = idx === scenarioIndex;
@@ -486,11 +492,12 @@ export const ChallengesView: React.FC = () => {
               return (
                 <button
                   key={sc.id}
+                  type="button"
                   onClick={() => {
                     sound.playClick();
                     setScenarioIndex(idx);
                   }}
-                  className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all whitespace-nowrap flex items-center gap-2 border ${
+                  className={`px-4 py-2 rounded-xl text-xs font-bold font-mono transition-all whitespace-nowrap flex items-center gap-2 border cursor-pointer ${
                     isCurrent
                       ? 'bg-indigo-500/30 text-indigo-200 border-indigo-400'
                       : answered
@@ -503,18 +510,18 @@ export const ChallengesView: React.FC = () => {
                 </button>
               );
             })}
-          </div>
+          </nav>
 
           {/* Current Scenario Card */}
-          <div className="rounded-2xl border border-slate-800 bg-[#080d1e] p-6 sm:p-8 space-y-6">
-            <div>
+          <article className="rounded-2xl border border-slate-800 bg-[#080d1e] p-6 sm:p-8 space-y-6">
+            <header>
               <span className="text-xs font-mono font-bold uppercase tracking-wider text-indigo-400">
                 {currentScenario.title}
               </span>
-              <p className="text-base sm:text-lg font-semibold text-slate-100 mt-2 leading-relaxed">
+              <blockquote className="text-base sm:text-lg font-semibold text-slate-100 mt-2 leading-relaxed m-0 border-l-2 border-indigo-500 pl-4">
                 "{currentScenario.scenario}"
-              </p>
-            </div>
+              </blockquote>
+            </header>
 
             {/* Options List */}
             <div className="space-y-4">
@@ -551,12 +558,12 @@ export const ChallengesView: React.FC = () => {
 
                         {/* Immediate Explanation on Choice */}
                         {hasSelectedAny && (
-                          <div className="mt-3 pt-3 border-t border-slate-800/80 text-xs space-y-1">
+                          <aside className="mt-3 pt-3 border-t border-slate-800/80 text-xs space-y-1">
                             <div className="font-bold">{opt.feedback}</div>
                             <div className="text-slate-300 italic">
                               Principle: {opt.guideline}
                             </div>
-                          </div>
+                          </aside>
                         )}
                       </div>
                     </div>
@@ -566,46 +573,49 @@ export const ChallengesView: React.FC = () => {
             </div>
 
             {/* Stepper Navigation */}
-            <div className="flex items-center justify-between pt-4 border-t border-slate-800">
+            <footer className="flex items-center justify-between pt-4 border-t border-slate-800">
               <button
+                type="button"
                 onClick={() => {
                   sound.playClick();
                   setScenarioIndex((prev) => Math.max(0, prev - 1));
                 }}
                 disabled={scenarioIndex === 0}
-                className="text-xs font-mono text-slate-400 hover:text-slate-200 disabled:opacity-40"
+                className="text-xs font-mono text-slate-400 hover:text-slate-200 disabled:opacity-40 cursor-pointer"
               >
                 ← Previous Case
               </button>
 
               {scenarioIndex < ETHICS_SCENARIOS.length - 1 ? (
                 <button
+                  type="button"
                   onClick={() => {
                     sound.playClick();
                     setScenarioIndex((prev) => prev + 1);
                   }}
-                  className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-indigo-400 to-cyan-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-indigo-400 to-cyan-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
                 >
                   <span>Next Case</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               ) : (
                 <button
+                  type="button"
                   onClick={() => {
                     sound.playSuccess();
                     completeMission('mission_3', 100, 'ethics-expert');
                     setCurrentView('detective');
                   }}
-                  className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2"
+                  className="px-6 py-2.5 rounded-xl font-bold text-slate-950 bg-gradient-to-r from-emerald-400 to-teal-300 text-xs font-mono uppercase tracking-wider flex items-center gap-2 cursor-pointer"
                 >
                   <span>Advance to AI Detective</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
               )}
-            </div>
-          </div>
-        </div>
+            </footer>
+          </article>
+        </section>
       )}
-    </div>
+    </main>
   );
-};
+}

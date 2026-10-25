@@ -1,4 +1,16 @@
-export type ViewMode = 'home' | 'learn' | 'challenges' | 'detective' | 'skilltree' | 'progress' | 'profile';
+export type ViewMode =
+  | 'learning-path'
+  | 'tool-lab'
+  | 'responsible-ai'
+  | 'practice-missions'
+  | 'fact-check'
+  | 'progress'
+  | 'home'
+  | 'learn'
+  | 'challenges'
+  | 'detective'
+  | 'skilltree'
+  | 'profile';
 
 export type SkillBranch = 'foundations' | 'machine_learning' | 'prompt_engineering' | 'ai_ethics' | 'ai_detective' | 'apex';
 

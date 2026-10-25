@@ -10,6 +10,42 @@ export const LEVELS: LevelInfo[] = [
 
 export const INITIAL_BADGES: Badge[] = [
   {
+    id: 'ai-pathfinder',
+    name: 'AI Pathfinder',
+    icon: '🌀',
+    description: 'Finish all 3 foundation lessons.',
+    category: 'knowledge',
+    unlocked: true,
+    xpValue: 100,
+  },
+  {
+    id: 'data-detective',
+    name: 'Data Detective',
+    icon: '🎯',
+    description: 'Finish both foundation missions.',
+    category: 'detective',
+    unlocked: true,
+    xpValue: 100,
+  },
+  {
+    id: 'prompt-pilot',
+    name: 'Prompt Pilot',
+    icon: '⌨️',
+    description: 'Finish all 3 tools lessons.',
+    category: 'skills',
+    unlocked: false,
+    xpValue: 100,
+  },
+  {
+    id: 'ethics-navigator',
+    name: 'Ethics Navigator',
+    icon: '🛡️',
+    description: 'Finish all 3 ethics lessons.',
+    category: 'ethics',
+    unlocked: false,
+    xpValue: 100,
+  },
+  {
     id: 'ai-rookie',
     name: 'AI Rookie',
     icon: '🧠',

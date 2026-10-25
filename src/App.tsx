@@ -18,23 +18,32 @@ import { LearnView } from './views/LearnView';
 import { ChallengesView } from './views/ChallengesView';
 import { DetectiveView } from './views/DetectiveView';
 import { SkillTreeView } from './views/SkillTreeView';
-import { ProgressView } from './views/ProgressView';
+import { DashboardView } from './views/DashboardView';
+import { FactCheckMissionView } from './views/FactCheckMissionView';
 import { ProfileView } from './views/ProfileView';
 
 const MainAppContent: React.FC = () => {
   const { currentView } = useGame();
 
+  const isHomeView =
+    currentView === 'home' ||
+    currentView === 'learning-path' ||
+    currentView === 'tool-lab' ||
+    currentView === 'responsible-ai' ||
+    currentView === 'practice-missions';
+
   return (
-    <div className="min-h-screen flex flex-col bg-[#070b18] text-slate-100 academy-grid">
+    <div className="min-h-screen flex flex-col bg-[#070c18] text-slate-100">
       <Navbar />
 
       <main className="flex-1">
-        {currentView === 'home' && <HomeView />}
+        {isHomeView && <HomeView />}
+        {currentView === 'fact-check' && <FactCheckMissionView />}
+        {currentView === 'progress' && <DashboardView />}
         {currentView === 'learn' && <LearnView />}
         {currentView === 'challenges' && <ChallengesView />}
-        {currentView === 'detective' && <DetectiveView />}
+        {currentView === 'detective' && <FactCheckMissionView />}
         {currentView === 'skilltree' && <SkillTreeView />}
-        {currentView === 'progress' && <ProgressView />}
         {currentView === 'profile' && <ProfileView />}
       </main>
 
