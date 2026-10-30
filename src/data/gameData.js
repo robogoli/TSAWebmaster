@@ -49,7 +49,7 @@ export const INITIAL_BADGES = [
     id: 'ai-rookie',
     name: 'AI Rookie',
     icon: '🧠',
-    description: 'Mastered core foundations: what AI is, how neural networks learn, and AI vs traditional code.',
+    description: 'Understood what AI actually does, how models learn from data, and where their limits lie.',
     category: 'knowledge',
     unlocked: false,
     xpValue: 50,
@@ -58,7 +58,7 @@ export const INITIAL_BADGES = [
     id: 'prompt-master',
     name: 'Prompt Master',
     icon: '💡',
-    description: 'Crafted precision prompts utilizing the 4 Pillars: Task, Details, Audience, and Format.',
+    description: 'Wrote prompts that give specific instructions instead of vague one-liners.',
     category: 'skills',
     unlocked: false,
     xpValue: 100,
@@ -67,7 +67,7 @@ export const INITIAL_BADGES = [
     id: 'ethics-expert',
     name: 'Ethics Expert',
     icon: '⚖️',
-    description: 'Navigated tough ethical dilemmas regarding homework integrity, deepfakes, bias, and privacy.',
+    description: 'Navigated real student dilemmas about homework credit, deepfakes, and private information.',
     category: 'ethics',
     unlocked: false,
     xpValue: 100,
@@ -76,7 +76,7 @@ export const INITIAL_BADGES = [
     id: 'ai-detective',
     name: 'AI Detective',
     icon: '🔎',
-    description: 'Exposed dangerous AI hallucinations and verified factual inaccuracies in generated text.',
+    description: 'Spotted confident lies and checked facts against reliable textbooks.',
     category: 'detective',
     unlocked: false,
     xpValue: 100,
@@ -85,7 +85,7 @@ export const INITIAL_BADGES = [
     id: 'daily-striker',
     name: 'Daily Striker',
     icon: '⚡',
-    description: 'Evaluated today’s critical AI dilemma and chose the trustworthy factual response.',
+    description: 'Tackled a daily challenge and chose evidence over confidence.',
     category: 'skills',
     unlocked: false,
     xpValue: 25,
@@ -94,12 +94,270 @@ export const INITIAL_BADGES = [
     id: 'ai-master',
     name: 'AI Master',
     icon: '🤖',
-    description: 'Graduated from the AI Quest Academy with all core credentials and supreme XP standing.',
+    description: 'Completed the full AI Quest curriculum with honors.',
     category: 'master',
     unlocked: false,
     xpValue: 150,
   },
 ];
+
+export const CURRICULUM_TRACKS = [
+  {
+    id: 'track-1',
+    number: 1,
+    title: 'AI foundations',
+    tagline: 'Understand the systems behind the screen.',
+    estMinutes: 45,
+    completedLessons: 3,
+    totalLessons: 3,
+    lessons: [
+      {
+        num: '01',
+        title: 'Tell the concepts apart',
+        name: 'AI, machine learning & generative AI',
+        description: 'Distinguish broad AI, machine learning, and generative AI using everyday examples.',
+        humanInsight: "Think of AI as an umbrella: AI is any smart machine, machine learning is learning from examples, and generative AI is making new text or pictures. A calculator does math, but it never learns from its mistakes."
+      },
+      {
+        num: '02',
+        title: 'Follow the data',
+        name: 'How models learn from data',
+        description: 'Describe training data, patterns, and predictions without needing to write code.',
+        humanInsight: "Just like you learned to spot dogs by seeing hundreds of them (not by reading an anatomy manual), AI looks for recurring pixels or words. If all your dog photos were taken on grass, the computer might think grass is part of a dog!"
+      },
+      {
+        num: '03',
+        title: 'Recognize the limits',
+        name: 'Why AI can get things wrong',
+        description: 'Explain why incomplete data and hallucinations can produce unreliable answers.',
+        humanInsight: "Chatbots are autocomplete on steroids. They pick the next word that sounds natural, not the word that is true. That is why they will happily invent a fake book author with absolute confidence."
+      }
+    ]
+  },
+  {
+    id: 'track-2',
+    number: 2,
+    title: 'Tools & techniques',
+    tagline: 'Turn curiosity into practical, testable skills.',
+    estMinutes: 50,
+    completedLessons: 1,
+    totalLessons: 3,
+    lessons: [
+      {
+        num: '04',
+        title: 'Build a better prompt',
+        name: 'Build a better prompt',
+        description: 'Learn the 4 essential ingredients: Task, Details, Audience, and Format.',
+        humanInsight: "Telling an AI 'write about space' gives you generic Wikipedia soup. Telling it 'explain how a star dies for an 8th grader in 3 bullet points' gives you something you can actually use."
+      },
+      {
+        num: '05',
+        title: 'Use AI as a study partner',
+        name: 'Use AI as a study partner',
+        description: 'Ask AI to quiz you one question at a time instead of doing your homework.',
+        humanInsight: "The secret trick: Prompt the AI: 'Act as my biology tutor. Ask me one question about photosynthesis, wait for my response, and give me a gentle hint if I am stuck. Do not do my homework for me.'"
+      },
+      {
+        num: '06',
+        title: 'Verify and improve an output',
+        name: 'Verify and improve an output',
+        description: 'Cross-check answers with class textbooks and use source-grounded tools like NotebookLM.',
+        humanInsight: "Never accept an AI answer on blind faith. Look up the key names, dates, or formulas in your real textbook or an open source like OpenStax."
+      }
+    ]
+  },
+  {
+    id: 'track-3',
+    number: 3,
+    title: 'Responsible AI',
+    tagline: 'Make choices you can explain and defend.',
+    estMinutes: 40,
+    completedLessons: 0,
+    totalLessons: 3,
+    lessons: [
+      {
+        num: '07',
+        title: 'Question the bias',
+        name: 'Bias, fairness & representation',
+        description: 'Identify whose perspectives are missing. Compare two outputs about the same topic.',
+        humanInsight: "Because AI models train on internet text written by humans, they absorb human stereotypes. If you ask for an image of a 'nurse' or an 'engineer', see what gender or ethnicity it defaults to."
+      },
+      {
+        num: '08',
+        title: 'Protect the person',
+        name: 'Privacy and digital footprints',
+        description: 'Separate safe inputs from private data. Never upload student records or passwords.',
+        humanInsight: "Public chatbots aren't private diaries. Engineers can review prompts, and your words might help train future models. Never put your address, grades, or classmate secrets into a chat box."
+      },
+      {
+        num: '09',
+        title: 'Own your thinking',
+        name: 'Academic integrity & disclosure',
+        description: 'Explain and disclose your AI assistance. Follow your teacher\'s rules first.',
+        humanInsight: "Changing three words in an AI paragraph doesn't make it your work. If you used AI to brainstorm counterarguments, be proud and say: 'I used AI for brainstorming; I checked the sources and wrote the final paper myself.'"
+      }
+    ]
+  }
+];
+
+export const RESOURCES_DATA = {
+  cheatSheet: {
+    title: 'Student AI Cheat Sheet: The Traffic Light System',
+    description: 'A practical, human guide on what is okay, what requires caution, and what is straight-up cheating.',
+    categories: [
+      {
+        tier: 'GREEN: Allowed & Encouraged',
+        color: 'emerald',
+        items: [
+          'Brainstorming essay topic ideas or narrowing down a thesis statement.',
+          'Explaining a confusing textbook paragraph in simpler words.',
+          'Generating practice flashcards and quiz questions to test yourself.',
+          'Finding debugging suggestions when code throws a syntax error.',
+          'Formatting citations (MLA/APA) after you gathered the real sources yourself.'
+        ]
+      },
+      {
+        tier: 'YELLOW: Ask Your Teacher & Disclose',
+        color: 'amber',
+        items: [
+          'Using AI to critique your rough draft for grammar and pacing.',
+          'Generating an outline when you feel stuck on how to structure a paper.',
+          'Translating a short phrase from your second language to check meaning.',
+          'Always add a disclosure note: "I used AI to help brainstorm outline ideas. All research and writing was done by me."'
+        ]
+      },
+      {
+        tier: 'RED: Strictly Prohibited (Academic Dishonesty)',
+        color: 'rose',
+        items: [
+          'Copying and pasting AI-generated sentences into your assignment.',
+          'Having AI write answers to homework questions or test problems.',
+          'Faking quotes, citations, or data that the AI hallucinated.',
+          'Pasting classmates\' personal information, grades, or private photos into any chatbot.'
+        ]
+      }
+    ]
+  },
+  disclosureTemplates: [
+    {
+      useCase: 'Brainstorming & Idea Exploration',
+      statement: 'I used an AI assistant to brainstorm initial counterarguments for this topic. I evaluated each suggestion, looked up supporting evidence in our class textbook, and wrote the final essay in my own words.'
+    },
+    {
+      useCase: 'Tutoring & Concept Clarification',
+      statement: 'I used an AI tutor to explain the Calvin cycle in plant photosynthesis through interactive practice questions. No generated text was copied into this assignment.'
+    },
+    {
+      useCase: 'Coding & Debugging',
+      statement: 'I wrote the HTML structure and CSS styling myself. I consulted an AI tool to troubleshoot a flexbox alignment bug and annotated the fix in my code comments.'
+    }
+  ],
+  toolsDirectory: [
+    {
+      name: 'Google Teachable Machine',
+      category: 'No-Code Machine Learning',
+      url: 'https://teachablemachine.withgoogle.com/',
+      badge: 'Interactive Free Tool',
+      description: 'Train your own computer vision or audio model right inside your browser using your webcam or microphone. Zero code required. Perfect for seeing how lighting and backgrounds affect predictions.'
+    },
+    {
+      name: 'Google NotebookLM',
+      category: 'Source-Grounded Study',
+      url: 'https://notebooklm.google.com/',
+      badge: 'Zero-Hallucination Notes',
+      description: 'Upload your permitted class notes, PDF slides, or textbook chapters. The AI only answers questions using your uploaded files and gives click-to-verify citations for every claim.'
+    },
+    {
+      name: 'OpenStax Free Textbooks',
+      category: 'Verified Open Source',
+      url: 'https://openstax.org/',
+      badge: 'Peer-Reviewed Textbooks',
+      description: 'Free, peer-reviewed, college-level science and math textbooks used in our "Fact-check the fluent" daily challenge (Biology 2e chapters 7 & 8).'
+    }
+  ],
+  glossaryTerms: [
+    {
+      term: 'Artificial Intelligence (AI)',
+      plainEnglish: 'Any computer system designed to do tasks that usually require human intelligence—like recognizing speech, identifying objects in photos, or playing chess.'
+    },
+    {
+      term: 'Machine Learning (ML)',
+      plainEnglish: 'A way to build AI where computers learn rules on their own by analyzing thousands of examples, rather than being programmed with step-by-step human instructions.'
+    },
+    {
+      term: 'Generative AI',
+      plainEnglish: 'A type of machine learning that creates brand-new text, images, code, or sounds based on patterns it learned from existing human creations.'
+    },
+    {
+      term: 'Hallucination',
+      plainEnglish: 'When an AI confidently invents false facts, made-up dates, or non-existent book titles because the fabricated words sounded linguistically believable.'
+    },
+    {
+      term: 'Training Data',
+      plainEnglish: 'The massive collection of photos, books, websites, and articles fed into a computer so it can discover patterns. If the data has biases or gaps, the model will too.'
+    },
+    {
+      term: 'Prompt',
+      plainEnglish: 'The input instructions, question, or context you give to an AI model to guide what it creates next.'
+    },
+    {
+      term: 'Context Window',
+      plainEnglish: 'The "short-term working memory" of an AI during a chat. Once a conversation gets too long, older messages fall out of the window and the AI forgets them.'
+    },
+    {
+      term: 'Token',
+      plainEnglish: 'A chunk of characters (about 4 letters or 0.75 words) that AI models use as their basic building block to read and generate text.'
+    },
+    {
+      term: 'Algorithmic Bias',
+      plainEnglish: 'Unfair treatment or skewed predictions caused by historical prejudices present in the training data or poor choice of test examples.'
+    },
+    {
+      term: 'Source Grounding',
+      plainEnglish: 'Forcing an AI model to look up real documents and cite page numbers before answering, instead of relying solely on its internal memory.'
+    }
+  ],
+  evidenceKit: {
+    mission: 'Fact-Check the Fluent: Photosynthesis & Respiration',
+    sources: [
+      {
+        citation: 'OpenStax Biology 2e · §8.1 Energy in Living Systems',
+        summary: 'Photosynthesis uses light energy, carbon dioxide, and water to synthesize glucose and oxygen. Light energy is converted into chemical bond energy.',
+        relevance: 'Verifies Claim A (Supported): Light energy is indeed converted into sugars from CO2 and water.'
+      },
+      {
+        citation: 'OpenStax Biology 2e · Chapter 7 & 8 Cellular Respiration in Plants',
+        summary: 'Plant cells need energy 24 hours a day. While photosynthesis requires sunlight, cellular respiration occurs continuously day and night in all living plant cells.',
+        relevance: 'Debunks Claim B (False): Plants do not wait for night to respire; they respire during both daylight and darkness.'
+      },
+      {
+        citation: 'OpenStax Biology 2e · §8.1 Carbon Fixation and Plant Biomass',
+        summary: 'A tree is not made of dirt. More than 90% of a tree\'s dry biomass comes from atmospheric carbon dioxide captured during the Calvin cycle. Soil minerals provide crucial micronutrients (nitrogen, phosphorus) but only a tiny fraction of dry mass.',
+        relevance: 'Debunks Claim C (False): The bulk of a growing tree\'s dry mass comes from air (CO2), not soil minerals.'
+      }
+    ]
+  },
+  standardsAlignment: [
+    {
+      framework: 'AI4K12 Five Big Ideas',
+      guidelines: [
+        'Big Idea 1: Perception (Computers perceive the world using sensors)',
+        'Big Idea 2: Representation & Reasoning (Agents maintain representations)',
+        'Big Idea 3: Learning (Computers can learn from data)',
+        'Big Idea 4: Natural Interaction (Understanding human language & nuance)',
+        'Big Idea 5: Societal Impact (AI can influence society in positive and negative ways)'
+      ]
+    },
+    {
+      framework: 'CSTA K-12 CS Standards',
+      guidelines: [
+        '3A-IC-24: Evaluate the positive and negative cultural, social, and economic impacts of artificial intelligence.',
+        '3A-IC-28: Explain the privacy and ethical implications of collected data.',
+        '3A-AP-13: Create prototypes that use algorithms to solve computational problems.'
+      ]
+    }
+  ]
+};
 
 
 

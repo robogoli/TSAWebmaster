@@ -233,8 +233,21 @@ export function FactCheckMissionView() {
               </p>
             </div>
 
-            <div className="text-[11px] font-mono text-slate-500 pt-1">
-              Find the original: openstax.org → Biology 2e → Chapters 7-8
+            <div className="pt-2 flex flex-col gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  sound.playClick();
+                  setCurrentView("resources");
+                }}
+                className="w-full py-2 px-3 rounded-lg bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 hover:bg-emerald-500/20 text-xs font-mono font-semibold transition-all flex items-center justify-center gap-1.5 cursor-pointer"
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                <span>Open Full Student Resource Hub &amp; Citations</span>
+              </button>
+              <div className="text-[10px] font-mono text-slate-500 text-center">
+                Find the original: openstax.org → Biology 2e → Chapters 7-8
+              </div>
             </div>
           </div>
         </aside>

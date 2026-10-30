@@ -83,10 +83,19 @@ export const Footer = () => {
               <li>
                 <button
     type="button"
+    onClick={() => setCurrentView("resources")}
+    className="hover:text-emerald-400 transition-colors cursor-pointer text-left font-semibold text-emerald-300"
+  >
+                  Resources &amp; Toolkit Hub
+                </button>
+              </li>
+              <li>
+                <button
+    type="button"
     onClick={() => setCurrentView("progress")}
     className="hover:text-emerald-400 transition-colors cursor-pointer text-left"
   >
-                  Dashboard & Badges
+                  Dashboard &amp; Badges
                 </button>
               </li>
               <li>

@@ -18,6 +18,7 @@ import { SkillTreeView } from "./views/SkillTreeView";
 import { DashboardView } from "./views/DashboardView";
 import { FactCheckMissionView } from "./views/FactCheckMissionView";
 import { ProfileView } from "./views/ProfileView";
+import { ResourcesView } from "./views/ResourcesView";
 const MainAppContent = () => {
   const { currentView } = useGame();
   const isHomeView = currentView === "home" || currentView === "learning-path" || currentView === "tool-lab" || currentView === "responsible-ai" || currentView === "practice-missions";
@@ -27,6 +28,7 @@ const MainAppContent = () => {
       <main className="flex-1">
         {isHomeView && <HomeView />}
         {currentView === "fact-check" && <FactCheckMissionView />}
+        {currentView === "resources" && <ResourcesView />}
         {currentView === "progress" && <DashboardView />}
         {currentView === "learn" && <LearnView />}
         {currentView === "challenges" && <ChallengesView />}

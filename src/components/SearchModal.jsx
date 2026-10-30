@@ -176,6 +176,61 @@ export const SearchModal = () => {
       isUnlocked: true,
       action: () => setCurrentView("profile")
     });
+    list.push({
+      id: "res_cheatsheet",
+      category: "resource",
+      categoryLabel: "Resource: Guide",
+      title: "Student AI Cheat Sheet (Traffic Light System)",
+      subtitle: "Green (Allowed), Yellow (Disclose), Red (Cheating) rules for school.",
+      icon: BookOpen,
+      status: "Resource",
+      isUnlocked: true,
+      action: () => setCurrentView("resources")
+    });
+    list.push({
+      id: "res_evidence",
+      category: "resource",
+      categoryLabel: "Resource: Evidence",
+      title: "Evidence Starter Kit: OpenStax Biology 2e",
+      subtitle: "Verified textbook citations on photosynthesis, cellular respiration, and biomass.",
+      icon: BookOpen,
+      status: "Resource",
+      isUnlocked: true,
+      action: () => setCurrentView("resources")
+    });
+    list.push({
+      id: "res_disclosure",
+      category: "resource",
+      categoryLabel: "Resource: Generator",
+      title: "Student AI Disclosure Statement Generator",
+      subtitle: "One-click copyable statements to explain your AI assistance to teachers.",
+      icon: Sparkles,
+      status: "Resource",
+      isUnlocked: true,
+      action: () => setCurrentView("resources")
+    });
+    list.push({
+      id: "res_tools",
+      category: "resource",
+      categoryLabel: "Resource: Tools",
+      title: "Safe AI Learning Tools (Teachable Machine & NotebookLM)",
+      subtitle: "Zero-install tools for testing machine learning and grounded notes.",
+      icon: Wand2,
+      status: "Resource",
+      isUnlocked: true,
+      action: () => setCurrentView("resources")
+    });
+    list.push({
+      id: "res_glossary",
+      category: "resource",
+      categoryLabel: "Resource: Glossary",
+      title: "Plain-English AI Terms Glossary",
+      subtitle: "Clear definitions for tokens, hallucination, context windows & weights.",
+      icon: BookOpen,
+      status: "Resource",
+      isUnlocked: true,
+      action: () => setCurrentView("resources")
+    });
     return list;
   }, [state, setCurrentView, navigateToChallenges, openDailyModal, openCertificate]);
   const filteredResults = useMemo(() => {
@@ -269,6 +324,7 @@ export const SearchModal = () => {
         <nav aria-label="Category Filters" className="flex items-center gap-1.5 overflow-x-auto border-b border-slate-800/80 px-4 py-2 bg-[#070d1c] scrollbar-none">
           {[
     { id: "all", label: "All Items" },
+    { id: "resource", label: "Resources" },
     { id: "mission", label: "Missions" },
     { id: "skill", label: "Skill Tree" },
     { id: "badge", label: "Badges" },

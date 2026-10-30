@@ -48,16 +48,17 @@ export function ChallengesView() {
       setCustomScore(score);
       let output = "";
       if (hasTask && hasDetails) {
-        output = `\u{1F916} AI Model Response to "${customPromptText.slice(0, 35)}...":
+        output = `💡 Human Coach Evaluation for "${customPromptText.slice(0, 35)}...":
 
-\u2022 Key Takeaway: Precision parameters accepted. Since you specified structured details${hasAudience ? " tailored for your target audience" : ""}, the output is focused, accurate, and free of fluff.
-\u2022 Synthesized Insight: By defining clear constraints, you reduced AI hallucination probability by over 80%!
+• Why this works: You gave the AI clear marching orders instead of leaving it to guess. By specifying ${hasAudience ? "your exact audience and " : ""}concrete details, the model generates grounded, useful study material instead of generic textbook fluff.
+• High school takeaway: The more boundary lines you draw around your prompt, the less room the AI has to hallucinate fake facts!
 
-${hasFormat ? "[Structured formatting applied according to your instructions]" : "[Standard prose applied]"}`;
+${hasFormat ? "✓ Clear formatting constraint applied (bullets/table/timeline requested)." : "• Quick tip: Add a format constraint like 'in 3 bullet points' or 'as a comparison table' to make it even easier to study."}`;
       } else {
-        output = `\u{1F916} Generic Vague AI Response:
+        output = `⚠️ Why this prompt struggles:
 
-Space and topics are very large! Without specific details or audience requirements, I can only give you a generic, rambling encyclopedia summary. Try injecting more Task & Audience constraints!`;
+It's too open-ended! When you don't tell the AI who it's talking to or what format you need, it defaults to robotic, generic encyclopedia paragraphs. 
+Try remixing it with the 4 Pillars: Add who it's for, what specific details to focus on, and how to format the answer.`;
       }
       setCustomGeneratedOutput(output);
       setIsGenerating(false);
@@ -90,11 +91,11 @@ Space and topics are very large! Without specific details or audience requiremen
   }
       <header className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-800/80 pb-6">
         <div>
-          <div className="text-xs font-mono font-bold tracking-widest text-teal-400 uppercase mb-1">
-            ACADEMY TRAINING ARENA
+          <div className="text-xs font-mono font-bold tracking-widest text-emerald-400 uppercase mb-1">
+            CURRICULUM LABS · TRACKS 2 &amp; 3
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Missions 2 & 3: Skills & Ethics
+            Tools, Techniques &amp; Responsible AI
           </h1>
         </div>
 
@@ -108,10 +109,10 @@ Space and topics are very large! Without specific details or audience requiremen
       sound.playClick();
       setActiveTab("prompt");
     }}
-    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "prompt" ? "bg-teal-500/20 text-teal-300 border border-teal-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "prompt" ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
   >
             <Wand2 className="w-3.5 h-3.5" />
-            <span>MISSION 2: FIX THE PROMPT</span>
+            <span>TRACK 2: TOOLS &amp; TECHNIQUES</span>
             {isMission2Done && <span className="text-emerald-400">✓</span>}
           </button>
 
@@ -121,10 +122,10 @@ Space and topics are very large! Without specific details or audience requiremen
       sound.playClick();
       setActiveTab("ethics");
     }}
-    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "ethics" ? "bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
+    className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-bold transition-all cursor-pointer ${activeTab === "ethics" ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
   >
             <Scale className="w-3.5 h-3.5" />
-            <span>MISSION 3: AI ETHICS</span>
+            <span>TRACK 3: RESPONSIBLE AI</span>
             {isMission3Done && <span className="text-emerald-400">✓</span>}
           </button>
         </nav>

@@ -77,10 +77,10 @@ export function LearnView() {
               </span>}
           </div>
           <h1 className="text-2xl sm:text-3xl font-extrabold text-white">
-            Understand AI
+            Track 1: AI Foundations
           </h1>
           <p className="text-xs sm:text-sm text-slate-400 mt-1 max-w-2xl leading-relaxed">
-            Explore how machine learning differs from traditional rules, test your instincts, and earn your AI Rookie badge.
+            Understand the systems behind the screen. Learn how models learn from examples, how they differ from traditional code, and why they can get things wrong.
           </p>
         </div>
 
@@ -96,7 +96,7 @@ export function LearnView() {
     }}
     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${currentStep === "learn" ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
   >
-            1. LEARN
+            1. 3 CORE LESSONS
           </button>
           <span className="text-slate-600 text-xs" aria-hidden="true">→</span>
           <button
@@ -118,82 +118,104 @@ export function LearnView() {
     }}
     className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors cursor-pointer ${currentStep === "quiz" || currentStep === "completed" ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 shadow-sm" : "text-slate-400 hover:text-slate-200"}`}
   >
-            3. QUIZ
+            3. VERIFICATION QUIZ
           </button>
         </nav>
       </header>
 
       {
-    /* STAGE 1: LEARN */
+    /* STAGE 1: LEARN (3 CORE LESSONS) */
   }
       {currentStep === "learn" && <section aria-label="Foundational AI Lessons" className="space-y-8 animate-fadeIn">
           {
-    /* Concept Explanations */
+    /* 3 Lessons Matching Curriculum Screenshot */
   }
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {
-    /* Card 1: What is AI? */
+    /* Lesson 01: Tell the concepts apart */
   }
-            <article className="rounded-2xl border border-cyan-500/30 bg-[#091124] p-6 space-y-4 hover:border-cyan-400 transition-colors">
-              <figure className="h-12 w-12 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-300 m-0">
-                <Brain className="w-6 h-6" />
-              </figure>
-              <header>
-                <h2 className="text-lg font-bold text-white">What is AI?</h2>
-                <span className="text-xs text-cyan-400 font-mono">Traditional Code vs AI</span>
-              </header>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                In normal code, programmers write strict manual rules: <code className="text-cyan-300 font-mono">if (x == y)</code>.
-              </p>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                With <mark className="bg-cyan-950 text-cyan-200 px-1 rounded font-semibold">Artificial Intelligence</mark>, the computer is shown thousands of examples and discovers the hidden patterns by itself!
-              </p>
+            <article className="rounded-2xl border border-cyan-500/30 bg-[#091124] p-6 space-y-4 hover:border-cyan-400 transition-colors flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <figure className="h-10 w-10 rounded-xl bg-cyan-500/10 border border-cyan-500/30 flex items-center justify-center text-cyan-300 m-0">
+                    <Brain className="w-5 h-5" />
+                  </figure>
+                  <span className="text-[11px] font-mono font-bold text-cyan-400">
+                    LESSON 01
+                  </span>
+                </div>
+                <header>
+                  <h2 className="text-base font-bold text-white">Tell the concepts apart</h2>
+                  <span className="text-xs text-cyan-300 font-mono">AI, machine learning &amp; generative AI</span>
+                </header>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Traditional software follows strict human-written rules (<code className="text-cyan-300 font-mono">if light is red, stop</code>).
+                </p>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  With <strong>Machine Learning</strong>, the computer studies thousands of photos to figure out what a stop sign looks like itself. Generative AI goes one step further: it can paint a brand new stop sign from scratch!
+                </p>
+              </div>
+              <footer className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 italic">
+                Rule of thumb: A pocket calculator does math, but it never learns.
+              </footer>
             </article>
 
             {
-    /* Card 2: How does AI learn? */
+    /* Lesson 02: Follow the data */
   }
-            <article className="rounded-2xl border border-teal-500/30 bg-[#091124] p-6 space-y-4 hover:border-teal-400 transition-colors">
-              <figure className="h-12 w-12 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-300 m-0">
-                <Activity className="w-6 h-6" />
-              </figure>
-              <header>
-                <h2 className="text-lg font-bold text-white">How does AI learn?</h2>
-                <span className="text-xs text-teal-400 font-mono">Data & Feedback Loops</span>
-              </header>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                Imagine learning to shoot a basketball. At first you miss. Your eyes see the mistake, your brain adjusts muscle force, and you shoot again.
-              </p>
-              <p className="text-xs text-slate-300 leading-relaxed">
-                AI uses <strong>Training Data</strong> and mathematical dials called <strong>Weights</strong>. When it makes an error, it recalculates to become more accurate.
-              </p>
+            <article className="rounded-2xl border border-teal-500/30 bg-[#091124] p-6 space-y-4 hover:border-teal-400 transition-colors flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <figure className="h-10 w-10 rounded-xl bg-teal-500/10 border border-teal-500/30 flex items-center justify-center text-teal-300 m-0">
+                    <Activity className="w-5 h-5" />
+                  </figure>
+                  <span className="text-[11px] font-mono font-bold text-teal-400">
+                    LESSON 02
+                  </span>
+                </div>
+                <header>
+                  <h2 className="text-base font-bold text-white">Follow the data</h2>
+                  <span className="text-xs text-teal-300 font-mono">How models learn from data</span>
+                </header>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Think about learning to shoot a free throw. You don't read physics formulas; you shoot, miss, see where the ball went, and adjust your wrist.
+                </p>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  AI does the same with <strong>Training Data</strong> and mathematical dials called <strong>Weights</strong>. When its guess is off, it nudges its weights to make fewer mistakes next time.
+                </p>
+              </div>
+              <footer className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 italic">
+                The golden rule: If your training data is flawed or biased, the AI will be too.
+              </footer>
             </article>
 
             {
-    /* Card 3: Where is AI used? */
+    /* Lesson 03: Recognize the limits */
   }
-            <article className="rounded-2xl border border-amber-500/30 bg-[#091124] p-6 space-y-4 hover:border-amber-400 transition-colors">
-              <figure className="h-12 w-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-300 m-0">
-                <Sparkles className="w-6 h-6" />
-              </figure>
-              <header>
-                <h2 className="text-lg font-bold text-white">Where is AI used?</h2>
-                <span className="text-xs text-amber-400 font-mono">Everyday Impact</span>
-              </header>
-              <ul className="text-xs text-slate-300 space-y-2 list-none p-0 m-0">
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 shrink-0" />
-                  <span>Healthcare: Detecting diseases in X-rays</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
-                  <span>Mobility: Self-driving cars & navigation</span>
-                </li>
-                <li className="flex items-center gap-2">
-                  <span className="w-1.5 h-1.5 rounded-full bg-amber-400 shrink-0" />
-                  <span>Language: Real-time speech translation</span>
-                </li>
-              </ul>
+            <article className="rounded-2xl border border-amber-500/30 bg-[#091124] p-6 space-y-4 hover:border-amber-400 transition-colors flex flex-col justify-between">
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <figure className="h-10 w-10 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-300 m-0">
+                    <Sparkles className="w-5 h-5" />
+                  </figure>
+                  <span className="text-[11px] font-mono font-bold text-amber-400">
+                    LESSON 03
+                  </span>
+                </div>
+                <header>
+                  <h2 className="text-base font-bold text-white">Recognize the limits</h2>
+                  <span className="text-xs text-amber-300 font-mono">Why AI can get things wrong</span>
+                </header>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Chatbots are essentially high-speed autocomplete. They calculate which word sounds most natural next, not which word is true.
+                </p>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  When an AI doesn't know an answer, it doesn't say "I don't know." It stitches together believable sentences with complete confidence. That is called a <strong>hallucination</strong>.
+                </p>
+              </div>
+              <footer className="pt-3 border-t border-slate-800/80 text-[11px] text-slate-400 italic">
+                Never confuse a confident tone with factual accuracy.
+              </footer>
             </article>
           </div>
 

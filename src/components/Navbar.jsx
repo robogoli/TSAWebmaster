@@ -1,4 +1,4 @@
-import { Volume2, VolumeX, Search, Sparkles } from "lucide-react";
+import { Volume2, VolumeX, Search, Sparkles, BookOpen } from "lucide-react";
 import { useGame } from "../context/GameContext";
 import { sound } from "../utils/sound";
 export const Navbar = () => {
@@ -15,6 +15,7 @@ export const Navbar = () => {
     { id: "tool-lab", label: "Tool lab" },
     { id: "responsible-ai", label: "Responsible AI" },
     { id: "practice-missions", label: "Practice missions" },
+    { id: "resources", label: "Resources" },
     { id: "progress", label: "Your progress" }
   ];
   const handleNavClick = (view) => {
@@ -86,6 +87,20 @@ export const Navbar = () => {
             <kbd className="hidden sm:inline-block rounded px-1.5 py-0.5 text-[10px] font-mono text-slate-500 bg-slate-800/80">
               ⌘K
             </kbd>
+          </button>
+
+          {
+    /* Quick Resources shortcut */
+  }
+          <button
+    type="button"
+    onClick={() => handleNavClick("resources")}
+    className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold tracking-wide border transition-all cursor-pointer ${currentView === "resources" ? "bg-emerald-500/20 border-emerald-500/40 text-emerald-300" : "bg-slate-900/90 border-slate-800 text-slate-300 hover:text-white hover:border-slate-700"}`}
+    title="Browse Student AI Toolkit & Resources"
+  >
+            <BookOpen className="w-3.5 h-3.5 text-emerald-400" />
+            <span className="hidden sm:inline">RESOURCES</span>
+            <span className="sm:hidden">DOCS</span>
           </button>
 
           {

@@ -659,6 +659,121 @@ export function HomeView() {
         </div>
       </section>
 
+      {/* ========================================================================= */}
+      {/* 7. STUDENT RESOURCES & REFERENCE TOOLKIT (EASY TO FIND) */}
+      {/* ========================================================================= */}
+      <section id="resources" aria-label="Student Learning Resources" className="rounded-2xl border border-slate-800 bg-[#091224] p-6 sm:p-8 space-y-6">
+        <header className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-slate-800/80 pb-5">
+          <div>
+            <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-400 uppercase mb-1">
+              <BookOpen className="w-3.5 h-3.5" />
+              <span>EASY-TO-FIND STUDENT TOOLKIT</span>
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+              Student Resources &amp; Verification Hub
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-300 mt-1 max-w-2xl leading-relaxed">
+              Quick access to practical classroom rules, textbook evidence, safe no-code sandboxes, and teacher disclosure templates.
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => {
+              sound.playClick();
+              setCurrentView("resources");
+            }}
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-400 text-slate-950 font-bold text-xs uppercase tracking-wide hover:bg-emerald-300 transition-colors shrink-0 cursor-pointer shadow-lg shadow-emerald-500/10"
+          >
+            <span>Open Full Resource Hub</span>
+            <span aria-hidden="true">&rarr;</span>
+          </button>
+        </header>
+
+        {/* 4 Fast-Access Resource Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <article
+            onClick={() => {
+              sound.playClick();
+              setCurrentView("resources");
+            }}
+            className="p-5 rounded-xl border border-slate-800 bg-[#070e1c] hover:border-emerald-500/60 transition-all cursor-pointer group space-y-3"
+          >
+            <div className="flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+              <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
+              <span className="w-2.5 h-2.5 rounded-full bg-rose-400" />
+            </div>
+            <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+              The Traffic Light Rules
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Green (allowed brainstorming), Yellow (teacher disclosure), Red (academic dishonesty).
+            </p>
+            <span className="text-[11px] font-mono text-emerald-400 block pt-1">
+              View School Cheat Sheet &rarr;
+            </span>
+          </article>
+
+          <article
+            onClick={() => {
+              sound.playClick();
+              setCurrentView("fact-check");
+            }}
+            className="p-5 rounded-xl border border-slate-800 bg-[#070e1c] hover:border-emerald-500/60 transition-all cursor-pointer group space-y-3"
+          >
+            <Search className="w-5 h-5 text-emerald-400" />
+            <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+              Evidence Starter Kit
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              OpenStax Biology 2e citations &amp; fact-checking tools to expose fluent hallucinations.
+            </p>
+            <span className="text-[11px] font-mono text-emerald-400 block pt-1">
+              Inspect Source Notes &rarr;
+            </span>
+          </article>
+
+          <article
+            onClick={() => {
+              sound.playClick();
+              setCurrentView("resources");
+            }}
+            className="p-5 rounded-xl border border-slate-800 bg-[#070e1c] hover:border-emerald-500/60 transition-all cursor-pointer group space-y-3"
+          >
+            <Fingerprint className="w-5 h-5 text-emerald-400" />
+            <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+              Teacher Disclosure Generator
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Pre-written, human statements you can copy into your essay works-cited page.
+            </p>
+            <span className="text-[11px] font-mono text-emerald-400 block pt-1">
+              Generate 1-Click Statement &rarr;
+            </span>
+          </article>
+
+          <article
+            onClick={() => {
+              sound.playClick();
+              setCurrentView("resources");
+            }}
+            className="p-5 rounded-xl border border-slate-800 bg-[#070e1c] hover:border-emerald-500/60 transition-all cursor-pointer group space-y-3"
+          >
+            <Scan className="w-5 h-5 text-emerald-400" />
+            <h3 className="text-sm font-bold text-white group-hover:text-emerald-300 transition-colors">
+              No-Code AI Sandboxes
+            </h3>
+            <p className="text-xs text-slate-400 leading-relaxed">
+              Google Teachable Machine &amp; NotebookLM guides for safe student experiments.
+            </p>
+            <span className="text-[11px] font-mono text-emerald-400 block pt-1">
+              Explore Safe Tools &rarr;
+            </span>
+          </article>
+        </div>
+      </section>
+
       {
     /* Interactive Micro-Modal for Practice Missions */
   }
@@ -707,25 +822,161 @@ export function HomeView() {
                   </div>}
               </div>}
 
-            {activePracticeMission !== "spot-ai" && <div className="space-y-3 text-xs text-slate-300 leading-relaxed">
-                <p>
-                  This mission provides hands-on student worksheets and live evaluation prompts in accordance with the AI Quest curriculum.
+            {/* MISSION 2: STRESS-TEST A MODEL */}
+            {activePracticeMission === "stress-test" && (
+              <div className="space-y-4 text-xs text-slate-300">
+                <p className="leading-relaxed">
+                  Imagine you trained a vision model on Teachable Machine to identify your water bottle on your clean bedroom desk. What happens when you test it under tricky real-world conditions?
                 </p>
-                <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 font-mono text-emerald-300">
-                  Deliverable template prepared for class submission.
-                </div>
-              </div>}
 
-            <footer className="flex justify-end gap-3 pt-2">
+                <div className="space-y-2">
+                  <label className="font-mono text-emerald-400 block text-[11px] font-bold">
+                    SELECT TEST ENVIRONMENT:
+                  </label>
+                  <div className="grid grid-cols-3 gap-2">
+                    {[
+                      { id: "glare", label: "Direct Sunlight Glare" },
+                      { id: "dark", label: "Dim Hallway Lighting" },
+                      { id: "cafeteria", label: "Crowded Cafeteria" }
+                    ].map((env) => (
+                      <button
+                        key={env.id}
+                        type="button"
+                        onClick={() => {
+                          sound.playClick();
+                          setTechAnswers((prev) => ({ ...prev, stressTest: env.id }));
+                        }}
+                        className={`p-2.5 rounded-xl border text-center font-mono cursor-pointer text-[11px] transition-all ${
+                          techAnswers.stressTest === env.id
+                            ? "border-emerald-500 bg-emerald-950/40 text-emerald-300 font-bold"
+                            : "border-slate-800 bg-slate-900 text-slate-300 hover:border-slate-700"
+                        }`}
+                      >
+                        {env.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                {techAnswers.stressTest && (
+                  <div className="p-3.5 rounded-xl bg-slate-900 border border-slate-800 text-[11px] leading-relaxed space-y-2">
+                    <div className="flex items-center justify-between text-rose-400 font-mono font-bold">
+                      <span>PREDICTION CONFIDENCE: 34% (ERROR)</span>
+                      <span>STATUS: MISCLASSIFIED</span>
+                    </div>
+                    <p className="text-slate-300">
+                      The model mistook the water bottle for a "Coffee Mug" or "Unidentified Clutter". Why? Because neural networks learn pixel brightness and edge contrasts. When shadows, backlighting, or background people enter the frame, the pattern changes completely.
+                    </p>
+                    <div className="p-2 rounded bg-[#070d18] border border-slate-800 text-emerald-400 font-mono text-[10px]">
+                      Student Fix: Train with at least 50 photos in different rooms and varied lighting angles!
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* MISSION 5: FIND THE MISSING VOICE */}
+            {activePracticeMission === "missing-voice" && (
+              <div className="space-y-4 text-xs text-slate-300">
+                <p className="leading-relaxed">
+                  Compare these two AI-generated workplace summaries. Spot the subconscious stereotype:
+                </p>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <span className="text-[10px] font-mono text-emerald-400 font-bold block">
+                      OUTPUT A (NURSE):
+                    </span>
+                    <p className="text-slate-300 italic text-[11px]">
+                      "A nurse brings warmth and maternal care to the hospital floor, gently comforting patients and tending to doctors' requests."
+                    </p>
+                  </div>
+
+                  <div className="p-3 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
+                    <span className="text-[10px] font-mono text-cyan-400 font-bold block">
+                      OUTPUT B (ENGINEER):
+                    </span>
+                    <p className="text-slate-300 italic text-[11px]">
+                      "A software architect leads with aggressive analytical mastery, spending long nights conquering complex systems."
+                    </p>
+                  </div>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-slate-900 border border-amber-500/30 text-[11px] leading-relaxed space-y-1.5">
+                  <span className="text-amber-400 font-bold block">What's Missing or Skewed?</span>
+                  <p className="text-slate-300">
+                    The model coded nursing with gendered "maternal/gentle" adjectives, while coding engineering with "aggressive/masculine" traits. Real nurses perform high-stakes clinical triage; real engineers collaborate in diverse teams.
+                  </p>
+                  <p className="text-emerald-400 font-mono text-[10px]">
+                    Remixed Fair Prompt: "Describe the clinical decision-making duties of a registered nurse using gender-neutral, professional language."
+                  </p>
+                </div>
+              </div>
+            )}
+
+            {/* MISSION 6: DRAW YOUR AI BOUNDARY */}
+            {activePracticeMission === "ai-boundary" && (
+              <div className="space-y-4 text-xs text-slate-300">
+                <p className="leading-relaxed">
+                  Your history teacher says: <em>"You may use AI for research angles, but you must do the writing yourself and turn in your research trail."</em> Decide if these scenarios are allowed:
+                </p>
+
+                <div className="space-y-2">
+                  {[
+                    {
+                      id: "b1",
+                      text: "Asking AI to brainstorm 5 counterarguments against a thesis on the Industrial Revolution.",
+                      allowed: true,
+                      tag: "Allowed (Idea partner)"
+                    },
+                    {
+                      id: "b2",
+                      text: "Having AI write the introductory paragraph and turning it in with minor synonym tweaks.",
+                      allowed: false,
+                      tag: "Prohibited (Ghostwriting)"
+                    },
+                    {
+                      id: "b3",
+                      text: "Using AI to quiz you on key dates, then citing AI assistance in your bibliography.",
+                      allowed: true,
+                      tag: "Allowed (Study partner + disclosure)"
+                    }
+                  ].map((item) => (
+                    <div
+                      key={item.id}
+                      className="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between gap-3"
+                    >
+                      <span className="text-[11px] text-slate-200 leading-snug">
+                        {item.text}
+                      </span>
+                      <span
+                        className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold shrink-0 ${
+                          item.allowed
+                            ? "bg-emerald-950/80 text-emerald-400 border border-emerald-500/30"
+                            : "bg-rose-950/80 text-rose-400 border border-rose-500/30"
+                        }`}
+                      >
+                        {item.tag}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            <footer className="flex items-center justify-between border-t border-slate-800 pt-3">
+              <span className="text-[11px] font-mono text-slate-400">
+                Curriculum Task Complete
+              </span>
               <button
-    type="button"
-    onClick={() => {
-      sound.playClick();
-      setActivePracticeMission(null);
-    }}
-    className="px-4 py-2 rounded-lg bg-emerald-400 text-slate-950 font-bold text-xs font-mono uppercase cursor-pointer"
-  >
-                Done
+                type="button"
+                onClick={() => {
+                  sound.playClick();
+                  setActivePracticeMission(null);
+                }}
+                className="px-4 py-2 rounded-xl bg-emerald-400 text-slate-950 font-bold text-xs font-mono uppercase cursor-pointer hover:bg-emerald-300 transition-colors"
+              >
+                Close Lab
               </button>
             </footer>
           </section>
